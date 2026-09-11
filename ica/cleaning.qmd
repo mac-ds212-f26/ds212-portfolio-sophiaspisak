@@ -50,7 +50,7 @@ weather_clean <- weather %>%
 # create dateInYear
 weather_clean <- weather_clean %>%
   arrange(Month, Day) %>% # arrange the dates go in order
-  mutate(dayInYear = 1:365) # create sequence of 1 thru 365
+  mutate(dayInYear = 1:365) # create sequence of 1 through 365
 ```
 
 ```{r}
