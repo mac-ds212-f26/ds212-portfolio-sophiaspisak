@@ -65,11 +65,22 @@
     ]
   },
   {
-    "objectID": "pcl/pcl.html#files",
-    "href": "pcl/pcl.html#files",
+    "objectID": "pcl/pcl.html#file-system",
+    "href": "pcl/pcl.html#file-system",
     "title": "Pre-Class Learning Summaries",
-    "section": "Files",
-    "text": "Files",
+    "section": "File System",
+    "text": "File System",
+    "crumbs": [
+      "Pre-Class Learnings",
+      "<span class='chapter-number'>5</span>  <span class='chapter-title'>Pre-Class Learning Summaries</span>"
+    ]
+  },
+  {
+    "objectID": "pcl/pcl.html#advanced-data-visualization",
+    "href": "pcl/pcl.html#advanced-data-visualization",
+    "title": "Pre-Class Learning Summaries",
+    "section": "Advanced Data Visualization",
+    "text": "Advanced Data Visualization",
     "crumbs": [
       "Pre-Class Learnings",
       "<span class='chapter-number'>5</span>  <span class='chapter-title'>Pre-Class Learning Summaries</span>"
@@ -80,7 +91,7 @@
     "href": "ica/cleaning.html",
     "title": "Cleaning SFO Weather Data",
     "section": "",
-    "text": "Exercise\nCarryout the following steps to clean and save the San Francisco Weather data. Make sure to download and add the data file to your portfolio repository as instructed.\nCode# read in packages\nlibrary(tidyverse)\n\n# read in weather data\nweather &lt;- read.csv(\"data/raw/weather.csv\")\nCode# change 99999 to NA in PrecipYr\nweather_clean &lt;- weather %&gt;%\n  mutate(PrecipYr = na_if(PrecipYr, 99999))\nCode# create dateInYear\nweather_clean &lt;- weather_clean %&gt;%\n  arrange(Month, Day) %&gt;% # arrange the dates go in order\n  mutate(dayInYear = 1:365) # create sequence of 1 through 365\nCode# create month_name\nweather_clean &lt;- weather_clean %&gt;%\n  mutate(month_name = month.abb[Month]) # extract month abbreviation from Month var\nCode# save to processed data folder\nwrite_csv(weather_clean, file = \"data/processed/weather_clean.csv\")",
+    "text": "Exercise\nCarryout the following steps to clean and save the San Francisco Weather data. Make sure to download and add the data file to your portfolio repository as instructed.\nCode# read in packages\nlibrary(tidyverse)\n\n# read in weather data\nweather &lt;- read.csv(\"data/raw/weather.csv\")\nCode# change 99999 to NA in PrecipYr\nweather_clean &lt;- weather %&gt;%\n  mutate(PrecipYr = na_if(PrecipYr, 99999))\nCode# create dateInYear\nweather_clean &lt;- weather_clean %&gt;%\n  arrange(Month, Day) %&gt;% # arrange the dates go in order\n  mutate(dayInYear = 1:365) # create sequence of 1 through 365\nCode# create month_name\nweather_clean &lt;- weather_clean %&gt;%\n  mutate(month_name = month.abb[Month]) # extract month abbreviation from Month var\nCodewrite_csv(weather_clean, file = \"data/processed/weather_clean.csv\")\n# save to processed data folder",
     "crumbs": [
       "In-Class Activities",
       "<span class='chapter-number'>6</span>  <span class='chapter-title'>Cleaning SFO Weather Data</span>"
