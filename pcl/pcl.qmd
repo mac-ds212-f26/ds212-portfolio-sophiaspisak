@@ -9,3 +9,11 @@ title: "Pre-Class Learning Summaries"
 ## Quarto
 
 ![from qmd4sci.njtierney.com](0810-quarto.jpeg)
+
+## File System
+
+![](0911-files.png)
+
+## Advanced Data Visualization
+
+![](0914-adv-data-viz.png)
