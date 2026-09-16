@@ -87,19 +87,19 @@
     ]
   },
   {
-    "objectID": "ica/cleaning.html",
-    "href": "ica/cleaning.html",
+    "objectID": "ica/code/cleaning.html",
+    "href": "ica/code/cleaning.html",
     "title": "Cleaning SFO Weather Data",
     "section": "",
-    "text": "Exercise\nCarryout the following steps to clean and save the San Francisco Weather data. Make sure to download and add the data file to your portfolio repository as instructed.\nCode# read in packages\nlibrary(tidyverse)\n\n# read in weather data\nweather &lt;- read.csv(\"data/raw/weather.csv\")\nCode# change 99999 to NA in PrecipYr\nweather_clean &lt;- weather %&gt;%\n  mutate(PrecipYr = na_if(PrecipYr, 99999))\nCode# create dateInYear\nweather_clean &lt;- weather_clean %&gt;%\n  arrange(Month, Day) %&gt;% # arrange the dates go in order\n  mutate(dayInYear = 1:365) # create sequence of 1 through 365\nCode# create month_name\nweather_clean &lt;- weather_clean %&gt;%\n  mutate(month_name = month.abb[Month]) # extract month abbreviation from Month var\nCodewrite_csv(weather_clean, file = \"data/processed/weather_clean.csv\")\n# save to processed data folder",
+    "text": "Exercise\nCarryout the following steps to clean and save the San Francisco Weather data. Make sure to download and add the data file to your portfolio repository as instructed.\nCode# read in packages\nlibrary(tidyverse)\n\n# read in weather data\nweather &lt;- read.csv(\"../data/raw/weather.csv\")\nCode# change 99999 to NA in PrecipYr\nweather_clean &lt;- weather %&gt;%\n  mutate(PrecipYr = na_if(PrecipYr, 99999))\nCode# create dateInYear\nweather_clean &lt;- weather_clean %&gt;%\n  arrange(Month, Day) %&gt;% # arrange the dates go in order\n  mutate(dayInYear = 1:365) # create sequence of 1 through 365\nCode# create month_name\nweather_clean &lt;- weather_clean %&gt;%\n  mutate(month_name = month.abb[Month]) # extract month abbreviation from Month var\nCodewrite_csv(weather_clean, file = \"../data/processed/weather_clean.csv\")\n# save to processed data folder",
     "crumbs": [
       "In-Class Activities",
       "<span class='chapter-number'>6</span>  <span class='chapter-title'>Cleaning SFO Weather Data</span>"
     ]
   },
   {
-    "objectID": "ica/cleaning.html#exercise",
-    "href": "ica/cleaning.html#exercise",
+    "objectID": "ica/code/cleaning.html#exercise",
+    "href": "ica/code/cleaning.html#exercise",
     "title": "Cleaning SFO Weather Data",
     "section": "",
     "text": "Read in the weather data in this file with the correct relative file path after you move it to the instructed location.\nThere is a variable that has values that don’t make sense in the data context. Figure out which variable this is and clean it up by making those values missing using na_if().\nCreate a variable called dateInYear that indicates the day of the year (1-365) for each case. (Jan 1 should be 1, and Dec 31 should be 365).\nCreate a variable called month_name that shows the 3-letter abbreviation for each case.\nSave the wrangled data to the data/processed/ folder using write_csv(). Name this file weather_clean.csv. Look up the documentation for this function by typing ?write_csv in the Console. You’ll need to write an appropriate relative path.",
@@ -109,8 +109,8 @@
     ]
   },
   {
-    "objectID": "ica/03-adv-ggplot-notes.html",
-    "href": "ica/03-adv-ggplot-notes.html",
+    "objectID": "ica/code/03-adv-ggplot-notes.html",
+    "href": "ica/code/03-adv-ggplot-notes.html",
     "title": "3 Adv Data Viz",
     "section": "",
     "text": "🧩 Learning Goals\nBy the end of this lesson, you should be able to:",
@@ -120,8 +120,8 @@
     ]
   },
   {
-    "objectID": "ica/03-adv-ggplot-notes.html#learning-goals",
-    "href": "ica/03-adv-ggplot-notes.html#learning-goals",
+    "objectID": "ica/code/03-adv-ggplot-notes.html#learning-goals",
+    "href": "ica/code/03-adv-ggplot-notes.html#learning-goals",
     "title": "3 Adv Data Viz",
     "section": "",
     "text": "Navigate ggplot2 reference page to find needed functions for a desired visualization\nNavigate the different sections of a function help page to construct desired plot features, in particular,\n\nNavigate the Usage section to identify arguments that must be set\nNavigate the Arguments section to understand how arguments work\nNavigate the Aesthetics section to learn how plot appearance can be controlled\nNavigate the Examples section for some usage examples\n\n\nIdentify when to use different data arguments within ggplot() and geom_() layers",
@@ -131,8 +131,8 @@
     ]
   },
   {
-    "objectID": "ica/03-adv-ggplot-notes.html#introduction",
-    "href": "ica/03-adv-ggplot-notes.html#introduction",
+    "objectID": "ica/code/03-adv-ggplot-notes.html#introduction",
+    "href": "ica/code/03-adv-ggplot-notes.html#introduction",
     "title": "3 Adv Data Viz",
     "section": "Introduction 1\n",
     "text": "Introduction 1\n\nIn this lesson, we are going to recreate NYTimes 2015 Temperature Visualization (html) using data from San Francisco (SFO) in 2011.\n\n\nScreenshot of NYTimes 2015 Temperature Visualization",
@@ -142,8 +142,8 @@
     ]
   },
   {
-    "objectID": "ica/03-adv-ggplot-notes.html#reading-data",
-    "href": "ica/03-adv-ggplot-notes.html#reading-data",
+    "objectID": "ica/code/03-adv-ggplot-notes.html#reading-data",
+    "href": "ica/code/03-adv-ggplot-notes.html#reading-data",
     "title": "3 Adv Data Viz",
     "section": "Reading Data",
     "text": "Reading Data\nRun the code chunk below to load the tidyverse package and read in the San Francisco weather data.\n\nCode# load in packages and read data\nlibrary(tidyverse)\nweather &lt;- read_csv(\"https://mac-stat.github.io/data/sfo_weather.csv\")",
@@ -153,8 +153,8 @@
     ]
   },
   {
-    "objectID": "ica/03-adv-ggplot-notes.html#understanding-data",
-    "href": "ica/03-adv-ggplot-notes.html#understanding-data",
+    "objectID": "ica/code/03-adv-ggplot-notes.html#understanding-data",
+    "href": "ica/code/03-adv-ggplot-notes.html#understanding-data",
     "title": "3 Adv Data Viz",
     "section": "Understanding Data",
     "text": "Understanding Data\nBelow is the codebook of the data. Familiarize yourself with the meaning of each variable. Use the codebook as a reference when using the data.\n\n\nMonth: Month of the year (1-12)\n\nDay: Day within the month (1-31)\n\nLow/High: Low/high temperature this day\n\nNormalLow/NormalHigh: Typical low/high temperature for this day of the year\n\nRecordLow/RecordHigh: Record low/high temperature for this day of the year\n\nLowYr/HighYr: Year in which the record low/high was observed\n\nPrecip: Amount of precipitation (inches) this day\n\nRecordPrecip: Record amount of precipitation for this day of the year\n\nPrecipYr: Year in which the record precipitation was observed\n\ndate: The actual date in 2011 for this day in YYYY-MM-DD format\n\ndateInYear: What day of the year is it? (1-365)\n\nRecord: Logical (TRUE/FALSE) indicating whether this day had a high temperature record\n\nRecordText: Text that displays the record high for this day (\"Record high: ##\")\n\nRecordP: Logical (TRUE/FALSE) indicating whether this day had a precipitation record\n\nCulmPrec: Cumulative precipitation for the month up to this day",
@@ -164,8 +164,8 @@
     ]
   },
   {
-    "objectID": "ica/03-adv-ggplot-notes.html#exercise-1",
-    "href": "ica/03-adv-ggplot-notes.html#exercise-1",
+    "objectID": "ica/code/03-adv-ggplot-notes.html#exercise-1",
+    "href": "ica/code/03-adv-ggplot-notes.html#exercise-1",
     "title": "3 Adv Data Viz",
     "section": "Exercise 1",
     "text": "Exercise 1\nExamine the NYTimes 2015 Temperature Visualization (html) then answer the following questions.\nData Storytelling\n\nRelate the intro paragraph: “Scientists declared that 2015 was Earth’s hottest year on record…” to the design of the visualization. In particular, based on the intro paragraph,\n\nWhat key message/claim does NYTimes want readers to be able to explore?\n\nThat overall, daily temperatures exceeded the normal range across most cities; hence 2015 being the hottest year on recorded.\n\n\nHow did this goal inform what information is displayed in the visualization?\n\nChoosing to include the normal range of temperatures allows readers to compare the actual temperature to the normal range. Showing the record high and low gives additional context to show historic highs/lows and how close or far away the actual temperatures were. Dividing the display into months help provide context to which season it was.\n\n\n\n\n\nAesthetic Mapping\n\nWhat specific variables (from the data codebook) underlie the visualization?\n\nMonth, Day, Low/High, NormalLow/NormalHigh, RecordLow/RecordHigh, RecordText, Precip, RecordPrecip\n\n\nHow do these variables map to aesthetics of the visual elements, eg, position, size, shape, and color of glyphs?\n\nMonth as axis labels, Day, and temp variables as various parts of the gray, muted purple, and purple bars (record as gray, normal as muted purple, actual low/high as purple). Precip for faceted graphs in the bottom.",
@@ -175,8 +175,8 @@
     ]
   },
   {
-    "objectID": "ica/03-adv-ggplot-notes.html#exercise-2",
-    "href": "ica/03-adv-ggplot-notes.html#exercise-2",
+    "objectID": "ica/code/03-adv-ggplot-notes.html#exercise-2",
+    "href": "ica/code/03-adv-ggplot-notes.html#exercise-2",
     "title": "3 Adv Data Viz",
     "section": "Exercise 2",
     "text": "Exercise 2\nNavigate the Geoms section of the ggplot2 reference page to find a geom that corresponds to the visual elements in the temperature plot. Using both the small thumbnail visuals on the right and the names of the geom’s, brainstorm some possibilities for geom’s you might use to recreate the temperature visualization.\n\nPotentially geom_ribbon() and geom_linerange().\n\n\n\n\n\n\n\nNoteNavigating Documentation / Reference Pages\n\n\n\nYou need to navigate the geoms further by opening up their reference pages to understand if a particular geom is suitable for our task. Let’s look at the geom_point documentation page to learn how to read a documentation page..\nThe Usage section shows all of the possible inputs (arguments) to the geom. These are all of the ways that a geom can be customized. Just looking at the argument names can help give a hint as to what arguments might fit our needs.\nThe Arguments section, on the other hand, explains in detail what each argument does and the possible values the argument can take. The mapping, data, and ... arguments will be the most commonly used by far.\n\n\nmapping is the argument that is being used when we specify which variables should link or map to the plot aesthetics (the code inside aes()).\n\ndata is the argument where we specify the dataset containing the variables that the geom is using.\n\n... is used for fixed aesthetics (ones that don’t correspond to a variable), eg, to set the color of all points, we use color = \"red\" and to set the size of all points, we use size = 3.\n\nThe Aesthetics section of a geom documentation page gives information on how the visual elements of the geom correspond to data. For example, the geom_point documentation page shows that x and y aesthetics are available. It also shows some new aesthetics like stroke.\n\n\n\n\n\n\n\n\nNotedata Argument\n\n\n\nPreviously you have used one dataset per plot by specifying that as the first argument of ggplot(). However, multiple data sets can be passed into ggplot as shown in the example below.\n\nCodedata(diamonds)\n\ndiamonds_avg_price &lt;- diamonds |&gt;\n  group_by(carat) |&gt;\n  summarize(avg_price = mean(price)) |&gt;\n  arrange(carat)\ndiamonds_avg_price &lt;- diamonds_avg_price[seq(1, nrow(diamonds_avg_price), 3), ]\n\nggplot(diamonds, aes(x = carat, y = price)) +\n  geom_point() +\n  geom_point(\n    data = diamonds_avg_price,\n    aes(x = carat, y = avg_price),\n    color = \"deepskyblue\",\n    size = 3\n  )\n\n\n\n\n\n\n\n\n\nLook at the geom_linerange documentation page and start off your temperature visualization with the record lows and highs. Your plot should look like the one below. The hex code of the used light tan color is #ECEBE3.\n\n\nSFO Weather Records in 2011\n\n\nCode# recreate record temps\nggplot(weather) +\n  geom_linerange(aes(x = dateInYear, ymin = RecordLow, ymax = RecordHigh), color = \"#ECEBE3\") +\n    theme_classic()\n\n\n\n\n\n\n\n\n\n\n\n\n\nTipKeyboard Shortcuts\n\n\n\nAs you work on this plot, try to use some new keyboard shortcuts. Focus on the following:\n\nInsert code chunk: Ctrl+Alt+I (Windows). Option+Command+I (Mac).\nRun current code chunk: Ctrl+Shift+Enter (Windows). Command+Shift+Return (Mac).\nRun current line/currently selected lines: Ctrl+Enter (Windows). Command+Return (Mac).",
@@ -186,8 +186,8 @@
     ]
   },
   {
-    "objectID": "ica/03-adv-ggplot-notes.html#exercise-3",
-    "href": "ica/03-adv-ggplot-notes.html#exercise-3",
+    "objectID": "ica/code/03-adv-ggplot-notes.html#exercise-3",
+    "href": "ica/code/03-adv-ggplot-notes.html#exercise-3",
     "title": "3 Adv Data Viz",
     "section": "Exercise 3",
     "text": "Exercise 3\nIn your visualization, also display the usual temperatures (NormalLow and NormalHigh) and actual 2011 temperatures (Low and High). Your plot should look like the one below. The hex code of the color used for the usual temperatures is \"#C8B8BA\" and for the color used for actual temperatures is \"#A90248\".\n\n\nSFO observed, Average, and Record Daily Temperatures in 2011\n\n\nCode# add normal and actual temps\nggplot(weather) +\n  geom_linerange(aes(x = dateInYear, ymin = RecordLow, ymax = RecordHigh), color = \"#ECEBE3\", linewidth = 1) +\n  geom_linerange(aes(x = dateInYear, ymin = NormalLow, ymax = NormalHigh), color = \"#C8B8BA\", linewidth = 1) +\n  geom_linerange(aes(x = dateInYear, ymin = Low, ymax = High), color = \"#A90248\", linewidth = 1) +\n    theme_classic()\n\n\n\n\n\n\nCode# aes() is for variables - sometimes we can get away with putting it in ggplot() if we only have one geom or if we have mutliple geoms but they all are for the same variable. Otherwise, we need to put aes() within each geom, otherwise they'll inherit it from ggplot(), which might have unintended consequences.\n\n\n\n\n\n\n\n\nTipFiner Control\n\n\n\nIf you’d like finer control of the width of these lines/rectangles, check out the geom_rect documentation page.",
@@ -197,8 +197,8 @@
     ]
   },
   {
-    "objectID": "ica/03-adv-ggplot-notes.html#exercise-4",
-    "href": "ica/03-adv-ggplot-notes.html#exercise-4",
+    "objectID": "ica/code/03-adv-ggplot-notes.html#exercise-4",
+    "href": "ica/code/03-adv-ggplot-notes.html#exercise-4",
     "title": "3 Adv Data Viz",
     "section": "Exercise 4",
     "text": "Exercise 4\nRecreate the visual demarcations of the months by adding vertical lines separating the months. Brainstorm how we might draw those vertical lines. What geom might we use? What subset of the data might we use in that geom layer to draw lines only at the month divisions?\n\ngeom_vline? and dateInYear as first Julian date of every month\n\n\nCode# get subset of dates for vertical lines\nfirst_days &lt;- weather |&gt; \n  filter(dateInYear %in% c(32, 60, 91, 121, 152, 182, 213, 244, 274, 305, 335))\nhead(first_days)\n\n# A tibble: 6 × 19\n  Month   Day   Low  High NormalLow NormalHigh RecordLow LowYr RecordHigh HiYear\n  &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;     &lt;dbl&gt;      &lt;dbl&gt;     &lt;dbl&gt; &lt;dbl&gt;      &lt;dbl&gt;  &lt;dbl&gt;\n1     2     1    45    63        44         58        30  1950         70   1976\n2     3     1    40    59        46         60        35  1955         74   1959\n3     4     1    54    78        47         63        37  1976         83   1959\n4     5     1    47    76        49         66        44  2008         89   1947\n5     6     1    51    62        52         68        43  1954         91   1989\n6     7     1    54    80        54         71        46  1949         99   1985\n# ℹ 9 more variables: Precip &lt;dbl&gt;, RecordPrecip &lt;dbl&gt;, PrecipYr &lt;dbl&gt;,\n#   date &lt;date&gt;, dateInYear &lt;dbl&gt;, Record &lt;lgl&gt;, RecordText &lt;chr&gt;,\n#   RecordP &lt;lgl&gt;, CulmPrec &lt;dbl&gt;\n\nCode# add vertical lines\nggplot(weather) +\n  geom_linerange(aes(x = dateInYear, ymin = RecordLow, ymax = RecordHigh), color = \"#ECEBE3\", linewidth = 1) +\n  geom_linerange(aes(x = dateInYear, ymin = NormalLow, ymax = NormalHigh), color = \"#C8B8BA\", linewidth = 1) +\n  geom_vline(data = first_days, aes(xintercept = dateInYear), color = \"#B4B4B4\", linetype = 2) +\n  geom_linerange(aes(x = dateInYear, ymin = Low, ymax = High), color = \"#A90248\", linewidth = 1) +\n    xlim(1, 365) +\n    theme(axis.text.x = ) +\n    scale_x_continuous(expand = c(0,0)) +\n    theme_classic()",
@@ -208,8 +208,8 @@
     ]
   },
   {
-    "objectID": "ica/03-adv-ggplot-notes.html#exercise-5",
-    "href": "ica/03-adv-ggplot-notes.html#exercise-5",
+    "objectID": "ica/code/03-adv-ggplot-notes.html#exercise-5",
+    "href": "ica/code/03-adv-ggplot-notes.html#exercise-5",
     "title": "3 Adv Data Viz",
     "section": "Exercise 5",
     "text": "Exercise 5\nChange the x-axis labels so that the month names display in the center of each month’s slice of the plot.\n\n\n\n\n\n\nTipMonth Names\n\n\n\nR has built-in variables called month.abb and month.name that contain abbreviated and full month names.\n\n\nTry to figuring out this new challenge using search engines and LLMs:\n\n\nSearch Engines. Use Google to search for possible solutions using the jargon that is most likely to return the most relevant results. Record search queries and your thought process in selecting which search results to look at first.\n\nSearch query: ggplot2 axis text from different variable\nThought process: if there’s official documentation that uses terms or names functions I would expect to use, I look at that first since it’s the most authoritative and the cleanest. If there doesn’t appear to be any directly relevant documentation, then I look at the StackOverflow threads to see if someone has a similar question. When a suggested answer references a function or argument I’m not familiar with, I look it up in the documentation.\n\n\n\nLLMs. Use ChatGPT or Gemini with prompts that will most efficiently get you the desired results. Record the chat prompts used and output given. Evaluate the output. Do you fully understand the code generated? How can you tell that the generated code is correct?\n\nPrompt: I am creating a plot in RStudio using ggplot2 and other tidyverse packages for wrangling. Here is my code thus far; it runs as expected: [code] I want to label the x-axis using the built-in R function, month.name. The labels should be centered between the vertical lines so they accurately represent the months. Ask clarifying questions if necessary; do not be sycophantic. \nOutput: Assuming a standard 365-day year, you can center the month labels by setting x-axis breaks at each month’s midpoint day directly inside scale_x_continuous(). Relevant code below:\n\n\n\nmonth_days &lt;- c(31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31) month_ends &lt;- cumsum(month_days) month_starts &lt;- c(1, month_ends[-12] + 1) month_mids &lt;- (month_starts + month_ends) / 2\nscale_x_continuous( limits = c(1, 365), expand = c(0, 0), breaks = month_mids, labels = month.name )\nCentering Logic: month_mids computes the exact midpoint day for each month. This centers month.name between your first_days vertical boundary lines rather than placing labels on the line ticks.\nLabel Formatting: If full month names crowd the axis on smaller export sizes, replace month.name with month.abb (abbreviated names) or add guide = guide_axis(n.dodge = 2) inside scale_x_continuous() to stagger them.\n\nI don’t fully understand the breaks argument in the scale_x_continuous function. This is something I would look for in the documentation for the function. One way to check that the code is correct is picturing the intended result, running the code, and comparing the output. Checking it against what the documentation says is another way.\n\n\nCode# calculate middle days (doing it by hand to understand the logic)\n# months with 30 days: middle is 15.5; add 14.5\n# months with 31 days: middle is 16; add 15\n# February: middle is 14.5; add 13.5\nmiddle_days &lt;- c((1 + 15), # jan\n                 (32 + 13.5), # feb\n                 (60 + 15), # mar\n                 (91 + 14.5), # apr\n                 (121 + 15), # may\n                 (152 + 14.5), # jun\n                 (182 + 15), #jul\n                 (213 + 15), # aug\n                 (244 + 14.5), #sept\n                 (274 + 15), # oct\n                 (305 + 14.5), # nov\n                 (335 + 15) # dec\n                 ) # continuous scale, so values of middle_days can be non-real julian days (i.e. 15.5)\n\n# add month names to x-axis\nggplot(weather) +\n  geom_linerange(aes(x = dateInYear, ymin = RecordLow, ymax = RecordHigh), color = \"#ECEBE3\", linewidth = 1) +\n  geom_linerange(aes(x = dateInYear, ymin = NormalLow, ymax = NormalHigh), color = \"#C8B8BA\", linewidth = 1) +\n  geom_vline(data = first_days, aes(xintercept = dateInYear), color = \"#B4B4B4\", linetype = 2) +\n  geom_linerange(aes(x = dateInYear, ymin = Low, ymax = High), color = \"#A90248\", linewidth = 1) +\n    scale_x_continuous(limits = c(1, 365), expand = c(0,0), # move limits to scale_x_continuous to make things cleaner\n       breaks = middle_days, # breaks is where the labels will go; we want it to be centered so we use the middle of the month\n       labels = month.abb) + \n    theme(axis.text.x = element_text(size = 10),\n          axis.title.x = element_blank(),\n          axis.ticks.x = element_blank(),\n          panel.background = element_blank())\n\n\n\n\n\n\nCode    # theme_classic()",
@@ -219,8 +219,8 @@
     ]
   },
   {
-    "objectID": "ica/03-adv-ggplot-notes.html#exercise-6",
-    "href": "ica/03-adv-ggplot-notes.html#exercise-6",
+    "objectID": "ica/code/03-adv-ggplot-notes.html#exercise-6",
+    "href": "ica/code/03-adv-ggplot-notes.html#exercise-6",
     "title": "3 Adv Data Viz",
     "section": "Exercise 6",
     "text": "Exercise 6\nCreate a precipitation plot that looks like the following. Note that\n\nThe triangles point to precipitation records–refer to the data codebook above for the RecordP variable.\nThe numbers on the plot indicate the total precipitation for the month–search the hjust and vjust options to adjust the alignment of the numbers.\nThe blue and tan colors hex codes are \"#32a3d8\" and \"#ebeae2\", respectively.\n\n\n\nSFO Precipitation in 2011\n\n\nCode# get subset for record precipitation days\nrecord_precip_days &lt;- weather |&gt; \n  filter(RecordP == TRUE)\n\n# get subset for last day of month (total montly cumulation)\nmonth_total_precip &lt;- weather |&gt; \n  filter(dateInYear %in% c(31, 59, 90, 120, 151, 181, 212, 243, 273, 304, 334, 365))\n\n# create plot\nggplot() +\n  geom_area(data = weather, aes(x = dateInYear, y = CulmPrec), fill = \"#ebeae2\", color = \"#32a3d8\") +\n  geom_point(data = record_precip_days, aes(x = dateInYear, y = CulmPrec + 0.2), shape = 25, fill = \"black\") +\n  geom_text(data = month_total_precip, aes(x = dateInYear - 2, y = CulmPrec + 0.06, label = CulmPrec), size = 3) +\n  theme_classic()",
@@ -230,8 +230,8 @@
     ]
   },
   {
-    "objectID": "ica/03-adv-ggplot-notes.html#done",
-    "href": "ica/03-adv-ggplot-notes.html#done",
+    "objectID": "ica/code/03-adv-ggplot-notes.html#done",
+    "href": "ica/code/03-adv-ggplot-notes.html#done",
     "title": "3 Adv Data Viz",
     "section": "Done!",
     "text": "Done!\n\nCheck the ICA Instructions for how to (a) push your code to GitHub and (b) update your portfolio website",
@@ -241,8 +241,8 @@
     ]
   },
   {
-    "objectID": "ica/03-adv-ggplot-notes.html#footnotes",
-    "href": "ica/03-adv-ggplot-notes.html#footnotes",
+    "objectID": "ica/code/03-adv-ggplot-notes.html#footnotes",
+    "href": "ica/code/03-adv-ggplot-notes.html#footnotes",
     "title": "3 Adv Data Viz",
     "section": "",
     "text": "The exercise in this lesson are inspired by an assignment from the Concepts in Computing with Data course at UC Berkeley taught by Dr. Deborah Nolan.↩︎",
