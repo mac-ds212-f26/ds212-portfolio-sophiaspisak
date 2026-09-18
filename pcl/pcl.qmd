@@ -17,3 +17,7 @@ title: "Pre-Class Learning Summaries"
 ## Advanced Data Visualization
 
 ![](0914-adv-data-viz.png)
+
+## Advanced Spatial Data Visualization
+
+![](0918-adv-spatial-viz.png)
