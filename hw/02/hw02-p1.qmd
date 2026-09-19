@@ -1,0 +1,154 @@
+---
+title: "HW02-P1 Adv Data Viz"
+format: 
+  html: 
+    embed-resources: true
+---
+
+## Instructions
+
+Using `ggplot2` and other tools in R, recreate the original New York Times graphic to the greatest extent possible. Try to get as close as possible to the figure below:
+
+![](https://hash-mac.github.io/ds212site-f26/images/hw1_goal.png){width=600, fig-align="center"}
+
+You will need to use reference pages and documentation to discover necessary tools. For example, you may want to Google search "ggplot multiple plots". When looking through results, check publication dates and use newer references. Some helpful resources could include R documentation, Stack Overflow, and [R cheatsheets](https://rstudio.github.io/cheatsheets/).
+
+
+**Requirements**
+
+- Temperature graph
+    - Bands for the record, normal, and actual highs and lows are shown in the correct colors.
+    - Downward triangles point to the record high temperatures above the red band.
+    - Text displays the record high temperatures above the triangles.
+    - X-axis label: 3-letter month abbreviations appear in the middle of each month.
+    - Y-axis label: Tick marks at 0, 40, 80, and 120 only.
+    - Vertical lines separate the months.
+    - Title of "Temperature" is included.
+- Precipitation
+    - Tan area and blue line reflecting the monthly cumulative precipitation is included.
+    - Text (number) for cumulative precipitation for each month is included at the end of each month just above the blue line.
+    - Downward triangles point to the record precipitation days.
+    - Vertical lines separate the months.
+    - Title of "Precipitation" is included.
+- Overall
+    - Both the temperature and precipitation graphs are in one figure.
+    - The temperature plot takes up more vertical space than the precipitation plot.
+    - The title "SFO weather in 2011" is present.
+- Resource reflection
+    - At least 1 resource is listed
+    - At least 3 sentences about resources and their helpfulness in the task
+
+**Bonus:** If you'd like further practice, recreate the legend in the temperature graph that shows how the colored lines relate to record, normal, and actual highs.
+
+
+## Setup
+
+```{r}
+# Code for loading packages and reading in data
+library(tidyverse)
+weather <- read_csv("https://mac-stat.github.io/data/sfo_weather.csv")
+```
+
+
+
+## Visualization
+
+```{r}
+# Code for recreating the visualization
+# Use as many code chunks as you need to organize your work well
+
+# wrangling to create subsets for various geoms
+
+# for vertical lines
+first_days <- weather |> 
+  filter(dateInYear %in% c(32, 60, 91, 121, 152, 182, 213, 244, 274, 305, 335))
+head(first_days)
+
+# for month names on x-axis
+middle_days <- c((1 + 15), # jan
+                 (32 + 13.5), # feb
+                 (60 + 15), # mar
+                 (91 + 14.5), # apr
+                 (121 + 15), # may
+                 (152 + 14.5), # jun
+                 (182 + 15), #jul
+                 (213 + 15), # aug
+                 (244 + 14.5), #sept
+                 (274 + 15), # oct
+                 (305 + 14.5), # nov
+                 (335 + 15) # dec
+                 )
+
+# for record high triangles and text
+record_highs <- weather |> 
+  filter(Record == TRUE)
+
+# for record precipitation day triangles
+record_precip <- weather |> 
+  filter(RecordP == TRUE)
+
+# for last day of month (total monthly accumulation text)
+month_total_precip <- weather |> 
+  filter(dateInYear %in% c(31, 59, 90, 120, 151, 181, 212, 243, 273, 304, 334, 365))
+```
+
+```{r}
+# create temperature plot
+temp_plot <- ggplot() +
+  geom_linerange(data = weather, 
+                 aes(x = dateInYear, ymin = RecordLow, ymax = RecordHigh), 
+                 color = "#ECEBE3", 
+                 linewidth = 1) +
+  geom_linerange(data = weather, 
+                 aes(x = dateInYear, ymin = NormalLow, ymax = NormalHigh), 
+                 color = "#C8B8BA", 
+                 linewidth = 1) +
+  geom_vline(data = first_days, 
+             aes(xintercept = dateInYear), 
+             color = "#c7c7c7", 
+             linetype = 2) +
+  geom_linerange(data = weather, 
+                 aes(x = dateInYear, ymin = Low, ymax = High), 
+                 color = "#A90248", 
+                 linewidth = 1) +
+  geom_point(data = record_highs,
+             aes(x = dateInYear, y = High + 1.75), shape = 25, fill = "black") + # "+ 1.75" makes triangle bottom end at top of bar
+  geom_text(data = record_highs,
+            aes(x = dateInYear, y = High + 15, label = RecordText), size = 2.5, lineheight = 1) +
+  scale_x_continuous(limits = c(1, 365), 
+                      expand = c(0,0),
+                      breaks = middle_days,
+                      labels = month.abb) + 
+  scale_y_continuous(limits = c(-20, 125)) +
+  labs(title = "Temperature") +
+  theme(plot.title = element_text(size = 10,
+                                  face = "bold",
+                                  hjust = 0),
+        axis.text.x = element_text(size = 10),
+        axis.title.x = element_blank(),
+        axis.ticks.x = element_blank(),
+        axis.title.y = element_blank(),
+        axis.line.y.left = element_line(color = "black", linewidth = 0.5),
+        panel.background = element_blank())
+
+temp_plot
+```
+
+```{r}
+
+```
+
+
+## Resources Reflection (required)
+
+List the resources you used to help with this assignment then write 3-5 sentence reflection on which resources were most helpful in finishing this task.
+
+**Resources:**
+
+- https://ggplot2.tidyverse.org/reference/theme.html
+- https://ggplot2-book.org/arranging-plots.html#arranging-plots-on-top-of-each-other
+-
+
+**Reflection:**
+
+
