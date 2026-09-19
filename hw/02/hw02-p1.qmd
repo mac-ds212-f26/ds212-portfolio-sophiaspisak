@@ -88,8 +88,59 @@ record_precip <- weather |>
   filter(RecordP == TRUE)
 
 # for last day of month (total monthly accumulation text)
-month_total_precip <- weather |> 
+last_days <- weather |> 
   filter(dateInYear %in% c(31, 59, 90, 120, 151, 181, 212, 243, 273, 304, 334, 365))
+
+
+# create monthly subsets (not efficient but it works; some sort of for loop or function would be better)
+
+# jan
+jan <- weather |> 
+  filter(Month == 1)
+
+# feb 
+feb <- weather |> 
+  filter(Month == 2)
+
+# mar
+mar <- weather |> 
+  filter(Month == 3)
+
+# apr
+apr <- weather |> 
+  filter(Month == 4)
+
+# may
+may <- weather |> 
+  filter(Month == 5)
+
+# jun
+jun <- weather |> 
+  filter(Month == 6)
+
+# jul
+jul <- weather |> 
+  filter(Month == 7)
+
+# aug
+aug <- weather |> 
+  filter(Month == 8)
+
+# sep
+sep <- weather |> 
+  filter(Month == 9)
+
+# oct
+oct <- weather |> 
+  filter(Month == 10)
+
+# nov
+nov <- weather |> 
+  filter(Month == 11)
+
+# dec
+dec <- weather |> 
+  filter(Month == 12)
 ```
 
 ```{r}
@@ -103,7 +154,7 @@ temp_plot <- ggplot() +
                  aes(x = dateInYear, ymin = NormalLow, ymax = NormalHigh), 
                  color = "#C8B8BA", 
                  linewidth = 1) +
-  geom_vline(data = first_days, 
+  geom_vline(data = last_days, 
              aes(xintercept = dateInYear), 
              color = "#c7c7c7", 
              linetype = 2) +
@@ -112,9 +163,13 @@ temp_plot <- ggplot() +
                  color = "#A90248", 
                  linewidth = 1) +
   geom_point(data = record_highs,
-             aes(x = dateInYear, y = High + 1.75), shape = 25, fill = "black") + # "+ 1.75" makes triangle bottom end at top of bar
+             aes(x = dateInYear, y = High + 1.75), 
+             shape = 25, 
+             fill = "black") + # "+ 1.75" makes triangle bottom end at top of bar
   geom_text(data = record_highs,
-            aes(x = dateInYear, y = High + 15, label = RecordText), size = 2.5, lineheight = 1) +
+            aes(x = dateInYear, y = High + 15, label = RecordText), 
+            size = 2.5, 
+            lineheight = 1) +
   scale_x_continuous(limits = c(1, 365), 
                       expand = c(0,0),
                       breaks = middle_days,
@@ -135,7 +190,80 @@ temp_plot
 ```
 
 ```{r}
-
+# create precipitation plot
+ggplot() +
+  geom_area(data = jan, 
+            aes(x = dateInYear, y = CulmPrec), 
+            fill = "#ebeae2", 
+            color = "#32a3d8") +
+  geom_area(data = feb, 
+            aes(x = dateInYear, y = CulmPrec), 
+            fill = "#ebeae2", 
+            color = "#32a3d8") +
+  geom_area(data = mar, 
+            aes(x = dateInYear, y = CulmPrec), 
+            fill = "#ebeae2", 
+            color = "#32a3d8") +
+  geom_area(data = apr, 
+            aes(x = dateInYear, y = CulmPrec), 
+            fill = "#ebeae2", 
+            color = "#32a3d8") +
+  geom_area(data = may, 
+            aes(x = dateInYear, y = CulmPrec), 
+            fill = "#ebeae2", 
+            color = "#32a3d8") +
+  geom_area(data = jun, 
+            aes(x = dateInYear, y = CulmPrec), 
+            fill = "#ebeae2", 
+            color = "#32a3d8") +
+  geom_area(data = jul, 
+            aes(x = dateInYear, y = CulmPrec), 
+            fill = "#ebeae2", 
+            color = "#32a3d8") +
+  geom_area(data = aug, 
+            aes(x = dateInYear, y = CulmPrec), 
+            fill = "#ebeae2", 
+            color = "#32a3d8") +
+  geom_area(data = sep, 
+            aes(x = dateInYear, y = CulmPrec), 
+            fill = "#ebeae2", 
+            color = "#32a3d8") +
+  geom_area(data = oct, 
+            aes(x = dateInYear, y = CulmPrec), 
+            fill = "#ebeae2", 
+            color = "#32a3d8") +
+  geom_area(data = nov, 
+            aes(x = dateInYear, y = CulmPrec), 
+            fill = "#ebeae2", 
+            color = "#32a3d8") +
+  geom_area(data = dec, 
+            aes(x = dateInYear, y = CulmPrec), 
+            fill = "#ebeae2", 
+            color = "#32a3d8") +
+  geom_vline(data = month_total_precip, 
+             aes(xintercept = dateInYear), 
+             color = "#c7c7c7") +
+  geom_point(data = record_precip, 
+             aes(x = dateInYear, y = CulmPrec + 0.05), 
+             shape = 25, 
+             fill = "black") +
+  geom_text(data = month_total_precip, 
+            aes(x = dateInYear - 2, y = CulmPrec + 0.08, label = CulmPrec), 
+            size = 3) +
+  scale_x_continuous(limits = c(1, 370), 
+                      expand = c(0,0)) +
+  scale_y_continuous(limits = c(-0.25, 8.1),
+                     breaks = c(4, 8)) +
+  labs(title = "Precipitation") +
+  theme(plot.title = element_text(size = 10,
+                                  face = "bold",
+                                  hjust = 0),
+        axis.text.x = element_blank(),
+        axis.title.x = element_blank(),
+        axis.ticks.x = element_blank(),
+        axis.title.y = element_blank(),
+        axis.line.y.left = element_line(color = "black", linewidth = 0.5),
+        panel.background = element_blank())
 ```
 
 
