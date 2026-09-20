@@ -203,6 +203,56 @@ temp_plot
 ```
 
 ```{r}
+# add legend to temp_plot
+temp_plot <- temp_plot +
+  annotate("rect",
+           xmin = 210.25, xmax = 212.25, ymin = -17, ymax = 7.5,
+           fill = "#ECEBE3") +
+  annotate("rect",
+           xmin = 210.375, xmax = 212.125, ymin = -12, ymax = 3,
+           fill = "#C8B8BA") +
+  annotate("rect",
+           xmin = 210.825, xmax = 211.675, ymin = -8.5, ymax = 5.5,
+           fill = "#A90248") +
+  annotate("segment",
+           x = 211, xend = 215.575, y = 5.5, yend = 5.5,
+           linewidth = 0.15) + 
+  annotate("segment",
+           x = 211, xend = 215.575, y = -8.5, yend = -8.5,
+           linewidth = 0.15) +
+  annotate("segment",
+           x = 207.25, xend = 209.225, y = 2.75, yend = 2.75,
+           linewidth = 0.15) +
+  annotate("segment",
+           x = 207.25, xend = 209.225, y = -11.75, yend = -11.75,
+           linewidth = 0.15) +
+  annotate("segment",
+           x = 207.25, xend = 207.25, y = -11.75, yend = 2.75,
+           linewidth = 0.15) +
+  annotate("text", 
+           x = 195, y = -5.25,
+           size = 1.5,
+           label = "Normal range") +
+  annotate("text", 
+           x = 196, y = 7.5,
+           size = 1.5,
+           label = "Record high") +
+  annotate("text", 
+           x = 196.75, y = -17.25,
+           size = 1.5,
+           label = "Record low") +
+  annotate("text", 
+           x = 225, y = 5.5,
+           size = 1.5,
+           label = "Actual high") +
+  annotate("text", 
+           x = 225, y = -8.5,
+           size = 1.5,
+           label = "Actual low")
+```
+
+
+```{r}
 # create precipitation plot
 precip_plot <- ggplot() +
   geom_area(data = jan, 
@@ -312,10 +362,12 @@ List the resources you used to help with this assignment then write 3-5 sentence
 
 **Resources:**
 
+- Advanced Spatial Viz ICA
 - https://ggplot2.tidyverse.org/reference/theme.html
 - https://ggplot2-book.org/arranging-plots.html#arranging-plots-on-top-of-each-other
--
+- https://ggplot2.tidyverse.org/reference/scale_continuous.html
+- https://ggplot2.tidyverse.org/reference/annotate.html
 
 **Reflection:**
 
-
+The ggplot2 book was most helpful. It provided a good overview with some amount of detail for functions/geoms I needed to learn. The ggplot2 documentation was a good next step for reading about functions and their arguments in more detail. For example, I found the page about the theme() function and all of the arguments it takes incredibly helpful. I was able to customize the look of the plots with a fine level of control because there are so many options.
