@@ -46,6 +46,7 @@ You will need to use reference pages and documentation to discover necessary too
 ```{r}
 # Code for loading packages and reading in data
 library(tidyverse)
+library(patchwork)
 weather <- read_csv("https://mac-stat.github.io/data/sfo_weather.csv")
 ```
 
@@ -87,9 +88,14 @@ record_highs <- weather |>
 record_precip <- weather |> 
   filter(RecordP == TRUE)
 
-# for last day of month (total monthly accumulation text)
+# for last day of month minus dec (vert lines)
 last_days <- weather |> 
+  filter(dateInYear %in% c(31, 59, 90, 120, 151, 181, 212, 243, 273, 304, 334))
+
+# for monthly cuml precip total text
+month_cuml_precip <- weather |> 
   filter(dateInYear %in% c(31, 59, 90, 120, 151, 181, 212, 243, 273, 304, 334, 365))
+
 
 
 # create monthly subsets (not efficient but it works; some sort of for loop or function would be better)
@@ -149,41 +155,48 @@ temp_plot <- ggplot() +
   geom_linerange(data = weather, 
                  aes(x = dateInYear, ymin = RecordLow, ymax = RecordHigh), 
                  color = "#ECEBE3", 
-                 linewidth = 1) +
+                 linewidth = 0.75) +
   geom_linerange(data = weather, 
                  aes(x = dateInYear, ymin = NormalLow, ymax = NormalHigh), 
                  color = "#C8B8BA", 
-                 linewidth = 1) +
+                 linewidth = 0.75) +
   geom_vline(data = last_days, 
              aes(xintercept = dateInYear), 
              color = "#c7c7c7", 
-             linetype = 2) +
+             linetype = 3,
+             linewidth = 0.25) +
   geom_linerange(data = weather, 
                  aes(x = dateInYear, ymin = Low, ymax = High), 
                  color = "#A90248", 
-                 linewidth = 1) +
+                 linewidth = 0.75) +
   geom_point(data = record_highs,
-             aes(x = dateInYear, y = High + 1.75), 
-             shape = 25, 
-             fill = "black") + # "+ 1.75" makes triangle bottom end at top of bar
+             aes(x = dateInYear, y = High + 1.4), # "+ 1.4" makes triangle bottom end at top of bar
+             shape = 25,
+             size = 0.75,
+             fill = "black") + 
   geom_text(data = record_highs,
             aes(x = dateInYear, y = High + 15, label = RecordText), 
-            size = 2.5, 
+            size = 1.5, 
             lineheight = 1) +
   scale_x_continuous(limits = c(1, 365), 
                       expand = c(0,0),
                       breaks = middle_days,
                       labels = month.abb) + 
   scale_y_continuous(limits = c(-20, 125)) +
-  labs(title = "Temperature") +
-  theme(plot.title = element_text(size = 10,
+  labs(title = "SFO Weather in 2011",
+       subtitle = "Temperature") +
+  theme(plot.title = element_text(size = 8,
+                                  hjust = 0.5),
+        plot.subtitle = element_text(size = 8,
                                   face = "bold",
                                   hjust = 0),
-        axis.text.x = element_text(size = 10),
+        axis.text.x = element_text(size = 6),
         axis.title.x = element_blank(),
         axis.ticks.x = element_blank(),
+        axis.text.y = element_text(size = 6),
         axis.title.y = element_blank(),
-        axis.line.y.left = element_line(color = "black", linewidth = 0.5),
+        axis.line.y.left = element_line(color = "black", 
+                                        linewidth = 0.3),
         panel.background = element_blank())
 
 temp_plot
@@ -191,79 +204,105 @@ temp_plot
 
 ```{r}
 # create precipitation plot
-ggplot() +
+precip_plot <- ggplot() +
   geom_area(data = jan, 
             aes(x = dateInYear, y = CulmPrec), 
             fill = "#ebeae2", 
-            color = "#32a3d8") +
+            color = "#32a3d8",
+            linewidth = 0.25) +
   geom_area(data = feb, 
             aes(x = dateInYear, y = CulmPrec), 
             fill = "#ebeae2", 
-            color = "#32a3d8") +
+            color = "#32a3d8",
+            linewidth = 0.25) +
   geom_area(data = mar, 
             aes(x = dateInYear, y = CulmPrec), 
             fill = "#ebeae2", 
-            color = "#32a3d8") +
+            color = "#32a3d8",
+            linewidth = 0.25) +
   geom_area(data = apr, 
             aes(x = dateInYear, y = CulmPrec), 
             fill = "#ebeae2", 
-            color = "#32a3d8") +
+            color = "#32a3d8",
+            linewidth = 0.25) +
   geom_area(data = may, 
             aes(x = dateInYear, y = CulmPrec), 
             fill = "#ebeae2", 
-            color = "#32a3d8") +
+            color = "#32a3d8",
+            linewidth = 0.25) +
   geom_area(data = jun, 
             aes(x = dateInYear, y = CulmPrec), 
             fill = "#ebeae2", 
-            color = "#32a3d8") +
+            color = "#32a3d8",
+            linewidth = 0.25) +
   geom_area(data = jul, 
             aes(x = dateInYear, y = CulmPrec), 
             fill = "#ebeae2", 
-            color = "#32a3d8") +
+            color = "#32a3d8",
+            linewidth = 0.25) +
   geom_area(data = aug, 
             aes(x = dateInYear, y = CulmPrec), 
             fill = "#ebeae2", 
-            color = "#32a3d8") +
+            color = "#32a3d8",
+            linewidth = 0.25) +
   geom_area(data = sep, 
             aes(x = dateInYear, y = CulmPrec), 
             fill = "#ebeae2", 
-            color = "#32a3d8") +
+            color = "#32a3d8",
+            linewidth = 0.25) +
   geom_area(data = oct, 
             aes(x = dateInYear, y = CulmPrec), 
             fill = "#ebeae2", 
-            color = "#32a3d8") +
+            color = "#32a3d8",
+            linewidth = 0.25) +
   geom_area(data = nov, 
             aes(x = dateInYear, y = CulmPrec), 
             fill = "#ebeae2", 
-            color = "#32a3d8") +
+            color = "#32a3d8",
+            linewidth = 0.25) +
   geom_area(data = dec, 
             aes(x = dateInYear, y = CulmPrec), 
             fill = "#ebeae2", 
-            color = "#32a3d8") +
-  geom_vline(data = month_total_precip, 
+            color = "#32a3d8",
+            linewidth = 0.25) +
+  geom_vline(data = last_days, 
              aes(xintercept = dateInYear), 
-             color = "#c7c7c7") +
+             color = "#c7c7c7",
+             linewidth = 0.3) +
   geom_point(data = record_precip, 
-             aes(x = dateInYear, y = CulmPrec + 0.05), 
-             shape = 25, 
+             aes(x = dateInYear, y = CulmPrec + 0.275), 
+             shape = 25,
+             size = 0.65,
              fill = "black") +
-  geom_text(data = month_total_precip, 
-            aes(x = dateInYear - 2, y = CulmPrec + 0.08, label = CulmPrec), 
-            size = 3) +
+  geom_text(data = month_cuml_precip, 
+            aes(x = dateInYear - 2, y = CulmPrec + 0.265, label = CulmPrec), 
+            size = 1.5) +
   scale_x_continuous(limits = c(1, 370), 
                       expand = c(0,0)) +
   scale_y_continuous(limits = c(-0.25, 8.1),
                      breaks = c(4, 8)) +
   labs(title = "Precipitation") +
-  theme(plot.title = element_text(size = 10,
+  theme(plot.title = element_text(size = 8,
                                   face = "bold",
                                   hjust = 0),
         axis.text.x = element_blank(),
         axis.title.x = element_blank(),
         axis.ticks.x = element_blank(),
+        axis.text.y = element_text(size = 6),
         axis.title.y = element_blank(),
-        axis.line.y.left = element_line(color = "black", linewidth = 0.5),
+        axis.line.y.left = element_line(color = "black", 
+                                        linewidth = 0.3),
         panel.background = element_blank())
+
+precip_plot
+```
+
+```{r}
+# create full plot
+full_plot <- temp_plot / precip_plot +
+  plot_layout(nrow = 2, heights = c(3, 1.25))
+
+full_plot
 ```
 
 
