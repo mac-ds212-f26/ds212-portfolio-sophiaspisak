@@ -153,6 +153,17 @@
     ]
   },
   {
+    "objectID": "pcl/pcl.html#advanced-spatial-data-visualization",
+    "href": "pcl/pcl.html#advanced-spatial-data-visualization",
+    "title": "Pre-Class Learning Summaries",
+    "section": "Advanced Spatial Data Visualization",
+    "text": "Advanced Spatial Data Visualization",
+    "crumbs": [
+      "Pre-Class Learnings",
+      "<span class='chapter-number'>6</span>  <span class='chapter-title'>Pre-Class Learning Summaries</span>"
+    ]
+  },
+  {
     "objectID": "ica/code/cleaning.html",
     "href": "ica/code/cleaning.html",
     "title": "Cleaning SFO Weather Data",
@@ -289,7 +300,7 @@
     "href": "ica/code/03-adv-ggplot-notes.html#exercise-6",
     "title": "3 Adv Data Viz",
     "section": "Exercise 6",
-    "text": "Exercise 6\nCreate a precipitation plot that looks like the following. Note that\n\nThe triangles point to precipitation records–refer to the data codebook above for the RecordP variable.\nThe numbers on the plot indicate the total precipitation for the month–search the hjust and vjust options to adjust the alignment of the numbers.\nThe blue and tan colors hex codes are \"#32a3d8\" and \"#ebeae2\", respectively.\n\n\n\nSFO Precipitation in 2011\n\n\nCode# get subset for record precipitation days\nrecord_precip_days &lt;- weather |&gt; \n  filter(RecordP == TRUE)\n\n# get subset for last day of month (total montly cumulation)\nmonth_total_precip &lt;- weather |&gt; \n  filter(dateInYear %in% c(31, 59, 90, 120, 151, 181, 212, 243, 273, 304, 334, 365))\n\n# create plot\nggplot() +\n  geom_area(data = weather, aes(x = dateInYear, y = CulmPrec), fill = \"#ebeae2\", color = \"#32a3d8\") +\n  geom_point(data = record_precip_days, aes(x = dateInYear, y = CulmPrec + 0.2), shape = 25, fill = \"black\") +\n  geom_text(data = month_total_precip, aes(x = dateInYear - 2, y = CulmPrec + 0.06, label = CulmPrec), size = 3) +\n  theme_classic()",
+    "text": "Exercise 6\nCreate a precipitation plot that looks like the following. Note that\n\nThe triangles point to precipitation records–refer to the data codebook above for the RecordP variable.\nThe numbers on the plot indicate the total precipitation for the month–search the hjust and vjust options to adjust the alignment of the numbers.\nThe blue and tan colors hex codes are \"#32a3d8\" and \"#ebeae2\", respectively.\n\n\n\nSFO Precipitation in 2011\n\n\nCode# get subset for record precipitation days\nrecord_precip_days &lt;- weather |&gt; \n  filter(RecordP == TRUE)\n\n# get subset for last day of month (total monthly cumulation)\nmonth_total_precip &lt;- weather |&gt; \n  filter(dateInYear %in% c(31, 59, 90, 120, 151, 181, 212, 243, 273, 304, 334, 365))\n\n# create plot\nggplot() +\n  geom_area(data = weather, aes(x = dateInYear, y = CulmPrec), fill = \"#ebeae2\", color = \"#32a3d8\") +\n  geom_point(data = record_precip_days, aes(x = dateInYear, y = CulmPrec + 0.2), shape = 25, fill = \"black\") +\n  geom_text(data = month_total_precip, aes(x = dateInYear - 2, y = CulmPrec + 0.06, label = CulmPrec), size = 3) +\n  theme_classic()",
     "crumbs": [
       "In-Class Activities",
       "<span class='chapter-number'>8</span>  <span class='chapter-title'>3 Adv Data Viz</span>"
