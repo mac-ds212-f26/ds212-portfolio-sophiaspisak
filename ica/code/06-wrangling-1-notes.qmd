@@ -235,7 +235,7 @@ diamonds |>
   filter(price < 400 | price > 10000)
 
 #2
-diamonds |> p
+diamonds |>
   filter(price >= 500, price <= 600)
 
 #3
