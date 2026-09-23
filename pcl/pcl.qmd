@@ -21,3 +21,8 @@ title: "Pre-Class Learning Summaries"
 ## Advanced Spatial Data Visualization
 
 ![](0918-adv-spatial-viz.png)
+
+
+## Advanced Data Wrangling 1
+
+![](0923-adv-wrangling-1.png)
