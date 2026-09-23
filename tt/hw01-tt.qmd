@@ -1,0 +1,231 @@
+---
+title: "Homework 01"
+execute:
+  message: false
+  warning: false
+format:
+  html:
+    code-fold: true
+---
+
+
+## TidyTuesday Part
+
+Explore the week's [TidyTuesday](https://github.com/rfordatascience/tidytuesday) challenge. Develop a research question, then answer it through a short data story mainly composed of [effective visualizations](https://docs.google.com/presentation/d/1WHr6Itzm2IJLxvppcacxHpr8R4NxO4MfvWWUPmtQx6Q/preview?slide=id.g13360dab5d5_0_61).  Provide sufficient background for readers to grasp your narrative.  Refer to the Homework Instructions ⭐ page on the course website for details on how to submit this part.
+
+
+## Data Background
+
+This week's Tidy Tuesday data comes from [James Hoffman](https://www.youtube.com/@jameshoffmann/featured), a Youtuber who recently created a video about the "Cappuccino Index." The data was curated by [Filip Reirson](https://github.com/freierson).
+
+The index is calculated at the country level, although not all countries are included. By collecting information on baristas' hourly wages and the price of a small cappuccino at 1 or more cafes in each country, the Cappuccino Index measures how long, in minutes and seconds, a barista would need to work to pay for a small cappuccino. The full dataset also includes additional information about each cafe, such as whether it's located in an urban, suburban, or rural area.
+
+
+## Research Question
+
+What are the spatial patterns of who the Cappuccino Index measures, and what are the spatial patterns of who it might measure more accurately?
+
+
+## Who Does the Cappuccino Index Measure?
+
+The dataset indexes 87 countries, which is a considerable amount. However, because (understandably) the dataset doesn't include info on countries it *doesn't* index, it's difficult to see the spatial patterns of who is and isn't measured. A map can help.
+```{r}
+# pre-processing
+
+# load libraries
+library(tidyverse)
+library(arcpullr)
+library(showtext)
+
+# read in data (code in this chunk is from TT readme, authored by jcheng5)
+cafe <- readr::read_csv('https://raw.githubusercontent.com/rfordatascience/tidytuesday/main/data/2026/2026-09-08/cafe.csv')
+cappuccino_index <- readr::read_csv('https://raw.githubusercontent.com/rfordatascience/tidytuesday/main/data/2026/2026-09-08/cappuccino_index.csv')
+
+# replace the non-breaking spaces in `country` (code in this chunk is from TT readme, authored by jcheng5)
+cafe$country <- gsub("\u00a0", " ", cafe$country)
+cappuccino_index$country <- gsub("\u00a0", " ", cappuccino_index$country)
+
+# join cafe and cap index datasets
+cafe_join <- left_join(cafe, cappuccino_index, by = join_by(country))
+
+# create countries shapefile from ArcGIS 
+countries <- get_spatial_layer("https://services.arcgis.com/P3ePLMYs2RVChkJx/ArcGIS/rest/services/World_Countries_(Generalized)/FeatureServer/0")
+
+# remove Antarctica
+countries <- countries |> 
+  filter(COUNTRY != "Antarctica")
+
+# reproject coordinate system
+countries <- countries |> 
+  st_transform(crs = "ESRI:54030")
+
+# in the cafe_join table, rename countries to match those in the countries shapefile
+cafe_join <- cafe_join |> 
+  mutate(country = replace_values(country, "UAE" ~ "United Arab Emirates"),
+         country = replace_values(country, "UK" ~ "United Kingdom"),
+         country = replace_values(country, "USA" ~ "United States"))
+
+# join cafe and index data to shapefile
+countries_join <- countries |> 
+  left_join(cafe_join, by = join_by(COUNTRY == country))
+
+# create variable for whether country has cappuccino index or not
+countries_join <- countries_join |> 
+  mutate(index_present = factor(!is.na(index))) |> 
+  mutate(index_present = fct_relevel(index_present, "TRUE"))
+
+# create countries_samp
+countries_samp <- countries |> 
+  mutate(COUNTRY = replace_values(COUNTRY, "United Arab Emirates" ~ "UAE"),
+         COUNTRY = replace_values(COUNTRY, "United Kingdom" ~ "UK"),
+         COUNTRY = replace_values(COUNTRY, "United States" ~ "USA"))
+
+# joining cap index and countries_samp; for n, change NAs to 0 for sample size mapping purposes
+countries_samp_size <- countries_samp |> 
+  left_join(cappuccino_index, by = join_by(COUNTRY == country))
+
+# create new discrete variable for sample size
+countries_samp_size <- countries_samp_size |> 
+  mutate(n_discrete = case_when(n < 1 ~ "Not Indexed",
+                       n > 0 & n < 101 ~ "1 - 100",
+                       n > 100 & n < 176 ~ "101 - 175",
+                       n > 175 ~ "176 - 600"))
+```
+
+```{r fig.alt = "a map shows which countries are measured by the cappuccino index. Most of North America, South America, eastern Asia, and Europe are covered, whereas western Asia and much of Africa are not."}
+# create map of which countries have a cappuccino index
+
+# add custom Google Font using showtext library
+font_add_google("M PLUS 1p")
+showtext_auto()
+
+# create cappuccino color scheme
+cap_cols <- c("#b08267", "#e9dcd3")
+
+# use ggplot to make map
+indexed_countries <- ggplot() + 
+  geom_sf(data = countries_join, aes(fill = index_present), color = "#7D7D7D") +
+  scale_fill_manual(name = NULL,
+    values = cap_cols,
+    labels = c("Included in Index", "Not Included in Index")) +
+  ggthemes::theme_map() +
+   labs(
+    title = "Which Countries Does the Cappuccino Index Include?",
+    caption = "Created by Sophia Spisak, 09/26 | Projection: Robinson | Sources: James Hoffmann; Filip Reierson via Github"
+  ) +
+  theme(plot.title = element_text(size = 15,
+                                  hjust = .55,
+                                  color = "#75523e",
+                                  family = "M PLUS 1p",
+                                  face = "bold"),
+        plot.caption = element_text(size = 6.5,
+                                    color = "#75523e",
+                                  family = "M PLUS 1p",
+                                  hjust = 0.55),
+        legend.text = element_text(size = 9.5,
+                                   color = "#75523e",
+                                  family = "M PLUS 1p"),
+        legend.key.height = unit(0.35, "cm"),,
+        legend.position = "bottom",
+        legend.justification = c(0.55, 0),
+        legend.key.spacing.x = unit(0.35, "cm"))
+
+indexed_countries
+```
+It becomes clear that the Cappuccino Index most thoroughly covers Europe. This isn't surprising, as James Hoffmann resides in the United Kingdom, so accessing data from Europe may be easier for him/his team than, for example, in South America. The lack of index for Russia may reflect current socio-political challenges given on the ongoing war with Ukraine.
+
+North America and eastern Asia are also relatively well indexed, as is Australia and Oceania. However, large parts of western/southwest Asia are left out, and nearly all of Africa is missing. This seems to reflect the broader trend of a lack of data on countries in Africa, and it serves as a good reminder that the Cappuccino Index is not truly a global measurement.
+
+Note: Antarctica was removed from the map since it could not be measured by the Cappuccino Index and is not representative of the Cappuccino Index's potential coverage.
+
+
+## What is the Distribution of Sample Sizes?
+
+Like any index, The Cappuccino Index's results depend on sample size; here, the number of cafe's surveyed in each country. Larger sample sizes increase confidence in an accurate result, whereas small sample sizes may lead to an inaccurate result. Plotting the distribution of sample sizes reveals a wide range:
+```{r fig.alt = "a density plot shows three groups: n ranges from 1-100, 100 to 175, and 175 to 600. The vast majority of observations have a sample size less than 10."}
+# create density plot of sample sizes
+cappuccino_index |> 
+  ggplot() +
+  geom_density(aes(x = n), color = "#75523e") +
+  theme_minimal() +
+  labs(
+    title = "Distribution of Sample Size per Country",
+    subtitle = "Used to Calculate Cappuccino Index",
+    x = "Number of Cafes Used to Calculate Index per Country",
+    y = "Density",
+    caption = "Created by Sophia Spisak, 09/26 | Sources: James Hoffmann; Filip Reierson via Github"
+  ) +
+  theme(
+    plot.title = element_text(size = 13,
+                                  color = "#75523e",
+                                  family = "M PLUS 1p",
+                                  face = "bold"),
+    plot.subtitle = element_text(size = 12,
+                                  color = "#75523e",
+                                  family = "M PLUS 1p"),
+    axis.title.x = element_text(family = "M PLUS 1p",
+                                size = 10,
+                                color = "#75523e",
+                                margin = margin(t = 7)),
+    axis.title.y = element_text(family = "M PLUS 1p",
+                                size = 10,
+                                color = "#75523e",
+                                margin = margin(r = 9)),
+    axis.text = element_text(family = "M PLUS 1p",
+                             size = 8,
+                             color = "#75523e"),
+    plot.caption = element_text(size = 6.5,
+                                color = "#75523e",
+                                family = "M PLUS 1p",
+                                margin = margin(t = 12))
+  )
+```
+Most countries have a very small sample size (< 5 cafes), with the smallest sample size being 1 cafe. A small number of countries have sample sizes ranging from roughly 100 to 175 cafes, and an even smaller number of countries have sample sizes nearly as large as 600 cafes. This large discrepancy in sample sizes suggests that the Cappuccino Index calculations may be much more accurate for a small number of countries and potentially quite inaccurate for a majority of the countries measured.
+
+
+
+## Where Might the Cappuccino Index be More Accurate?
+
+To understand the spatial patterns of country sample sizes, a map is useful. The previous density plot suggests three natural breaks to map: 1 though 100 cafes, 101 through 175 cafes, and 176 through 600 cafes.
+```{r fig.alt = "a map of world countries shows that large sample sizes occur primarily in North America, Australia, and Europe. Elsewhere, sample sizes range from 1-100."}
+# create map of sample sizes
+ggplot() +
+  geom_sf(data = countries_samp_size, aes(fill = n_discrete)) +
+  scale_fill_manual(
+      name = NULL,
+      values = c(
+      "Not Indexed" = "#d1d1d1", # used Gemini to debug and resulted in this values code
+      "1 - 100"     = "#FCFFDD", # it's assigning the value from n_discrete to the hex code value
+      "101 - 175"   = "#BCE9C5",
+      "176 - 600"   = "#18BDB5"
+    ),
+    labels = c("1 - 100", "101 - 175", "176 - 600", "Not Indexed")
+  ) +
+  ggthemes::theme_map() +
+  labs(
+    title = "Where Might the Cappuccino Index be More Accurate?",
+    subtitle = "Spatial Patterns of Sample Size (Number of Cafes) per Country",
+    caption = "Created by Sophia Spisak, 09/26 | Projection: Robinson | Sources: James Hoffmann; Filip Reierson via Github"
+  ) +
+  theme(plot.title = element_text(size = 15,
+                                  hjust = .55,
+                                  color = "#3D3D3D",
+                                  family = "M PLUS 1p",
+                                  face = "bold"),
+        plot.subtitle = element_text(size = 12,
+                                     hjust = .55,
+                                     color = "#3D3D3D",
+                                  family = "M PLUS 1p"),
+        plot.caption = element_text(size = 6.5,
+                                    color = "#3D3D3D",
+                                  family = "M PLUS 1p",
+                                  hjust = 0.55),
+        legend.text = element_text(size = 9.5,
+                                   color = "#3D3D3D",
+                                  family = "M PLUS 1p"),
+        legend.key.height = unit(0.35, "cm"),,
+        legend.position = "bottom",
+        legend.justification = c(0.55, 0),
+        legend.key.spacing.x = unit(0.35, "cm"))
+```
+Countries with very large sample sizes are in the "Global North" - the US, Canada, Australia, and various locations in Europe. Countries with smaller sample size are far more common and spread more evenly across the globe. This suggests that the Cappuccino Index may more be more accurately representative in only specific areas, and that the index of most countries should be taken cautiously.
