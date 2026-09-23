@@ -41,13 +41,16 @@ library(tidyverse)
 library(ggplot2)
 library(grid)
 library(showtext)
+library(patchwork)
 ```
 
 ```{r}
 # Code for generating the data (if using the tibble() approach)
 unions <- tibble(group = c("All workers", "Private sector", "Public sector", "Transportation and utilities", "Manufacturing", "Mining", "Construction", "Education and health", "Arts, entertainment and recreation", "Business services", "Retail, food and hospitality", "Public administration", "Agriculture"),
        union_1983 = c(20, 17, 37, 47, 28, 27, 28, 26, 17, 10, 8, 30, 4),
-       union_2022 = c(10, 6, 33, 16, 8, 7, 13, 17, 7, 3, 3, 28, 5))
+       union_2022 = c(10, 6, 33, 16, 8, 7, 13, 17, 7, 3, 3, 28, 5),
+       text_1983 = c("20%", "17", "37", "47", "28", "27", "28", "26", "17", "10", "8", "30", "4"),
+       text_2022 = c("10%", "6", "33", "16", "8", "7", "13", "17", "7", "3", "3", "28", "5"))
 
 # relevel groups so the order of industries matches the plot
 unions <- unions %>% 
@@ -78,6 +81,10 @@ ag_industry <- industries |>
 # create sectors subset for sectors plot
 sectors <- unions |> 
   filter(group %in% c("Private sector", "Public sector"))
+
+# create all workers subset for all workers plot
+all_workers <- unions |> 
+  filter(group == "All workers")
 ```
 
 ```{r}
@@ -115,12 +122,13 @@ industries_plot <- ggplot() +
                      expand = c(0, 0)) +
   labs(title = "BY INDUSTRY") +
   theme(text = element_text(family = "Roboto"),
-        plot.title = element_text(hjust = -0.485,
+        plot.title = element_text(hjust = -0.556,
                                   size = 11,
                                   face = "bold"),
         axis.ticks = element_blank(),
         axis.title = element_blank(),
-        axis.text.x = element_text(size = 9.25),
+        axis.text.x = element_text(size = 9.25,
+                                   color = "#848484"),
         axis.text.y = element_text(margin = margin(r = 7, unit = "pt"),
                                    hjust = 0,
                                    size = 9.25),
@@ -128,7 +136,7 @@ industries_plot <- ggplot() +
         panel.background = element_blank(),
         panel.grid.major.x = element_line(color = "#e1e1e1"),
         panel.grid.major.y = element_line(color = "#e1e1e1",
-                                          linewidth = 0.6,
+                                          linewidth = 0.5,
                                           linetype = 3))
 
 industries_plot
@@ -136,20 +144,17 @@ industries_plot
 
 ```{r}
 # create sector plot
-ggplot() +
-  geom_segment(data = sectors, 
-               aes(x = union_1983, xend = union_2022, y = group),
+sectors_plot <- ggplot(data = sectors) +
+  geom_segment(aes(x = union_1983, xend = union_2022, y = group),
                arrow = arrow(angle = 50,
                              length = unit(0.17, "cm")),
                color = "#155c7e",
                linewidth = 0.75,
                lineend = "round") +
-  geom_text(data = sectors,
-            aes(x = union_1983 + 1.4, y = group, label = union_1983),
+  geom_text(aes(x = union_1983 + 1.4, y = group, label = union_1983),
             size = 3.25,
             fontface = "bold") +
-  geom_text(data = sectors,
-            aes(x = union_2022 - 1.2, y = group, label = union_2022),
+  geom_text(aes(x = union_2022 - 1.2, y = group, label = union_2022),
             size = 3.25,
             fontface = "bold") +
   scale_x_continuous(limits = c(0, 50),
@@ -157,12 +162,13 @@ ggplot() +
                      expand = c(0, 0)) +
   labs(title = "BY SECTOR") +
   theme(text = element_text(family = "Roboto"),
-        plot.title = element_text(hjust = -0.161,
+        plot.title = element_text(hjust = -0.535,
                                   size = 11,
                                   face = "bold"),
         axis.ticks = element_blank(),
         axis.title = element_blank(),
-        axis.text.x = element_text(size = 9.25),
+        axis.text.x = element_text(size = 9.25,
+                                   color = "#848484"),
         axis.text.y = element_text(margin = margin(r = 7, unit = "pt"),
                                    hjust = 0,
                                    size = 9.25),
@@ -170,9 +176,64 @@ ggplot() +
         panel.background = element_blank(),
         panel.grid.major.x = element_line(color = "#e1e1e1"),
         panel.grid.major.y = element_line(color = "#e1e1e1",
-                                          linewidth = 0.6,
+                                          linewidth = 0.5,
                                           linetype = 3))
+
+sectors_plot
 ```
+
+```{r}
+# create all workers plot
+all_workers_plot <- ggplot(data = all_workers) +
+  geom_segment(aes(x = union_1983, xend = union_2022, y = group),
+               arrow = arrow(angle = 50,
+                             length = unit(0.17, "cm")),
+               color = "#155c7e",
+               linewidth = 0.75,
+               lineend = "round") +
+  geom_text(aes(x = union_1983 + 2, y = group, label = text_1983),
+            size = 3.25,
+            fontface = "bold") +
+  geom_text(aes(x = union_2022 - 1.9, y = group, label = text_2022),
+            size = 3.25,
+            fontface = "bold") +
+  scale_x_continuous(limits = c(0, 50),
+                     breaks = c(0, 25, 50),
+                     expand = c(0, 0),
+                     labels = c("0%", "25", "50")) +
+  labs(title = "Union membership has fallen sharply over the past four decades",
+       subtitle = "Share of the work force in a union, by industry") +
+  theme(text = element_text(family = "Roboto"),
+        plot.title = element_text(hjust = 12.155,
+                                  size = 12,
+                                  face = "bold"),
+        plot.subtitle = element_text(hjust = -1.11,
+                                     size = 10,
+                                     color = "#848484",
+                                     margin = margin(b = 20, unit = "pt")),
+        axis.ticks = element_blank(),
+        axis.title = element_blank(),
+        axis.text.x = element_text(size = 9.25,
+                                   color = "#848484"),
+        axis.text.y = element_text(margin = margin(r = 7, unit = "pt"),
+                                   hjust = 0,
+                                   size = 9.25),
+        axis.line.y = element_line(color = "#e1e1e1"),
+        panel.background = element_blank(),
+        panel.grid.major.x = element_line(color = "#e1e1e1"),
+        panel.grid.major.y = element_line(color = "#e1e1e1",
+                                          linewidth = 0.5,
+                                          linetype = 3))
+
+all_workers_plot
+```
+
+```{r}
+# merge plots together into one larger plot
+all_workers_plot / sectors_plot / industries_plot +
+  plot_layout(nrow = 3, heights = c(0.9, 2.4, 11))
+```
+
 
 
 ## Resources Reflection (required)
@@ -186,10 +247,12 @@ List the resources you used to help with this assignment then write 3-5 sentence
 - https://stackoverflow.com/questions/71777528/how-to-filter-not-in
 - https://r-graph-gallery.com/415-arrows-in-ggplot-graph.html
 - https://stackoverflow.com/questions/75976913/edit-the-space-between-axis-ticks-and-axis-labels-in-ggplot
+- Amin's office hours
+- Google search for "NYT Times visualization" which lead me to use the Roboto font and learn that they probably do their viz in DataWrapper (cannot find original links)
 
 **Reflection:**
 
-The R-Statistics article featuring nearly all types of plots was immensely helpful in getting started and realizing that I was looking for geom_segment() and geom_point() to create the graph. 
+The R-Statistics article featuring nearly all types of plots was immensely helpful in getting started and realizing that I was looking for geom_segment(). Various documentation websites were also helpful in understanding how to use different functions, and I Googled to learn more about NYT's viz to try to emulate it better. Lastly, Amin's office hours were ultimately the most helpful, because I could ask specific questions and get feedback (and be forced to try something I thought wouldn't work, but it did :)).
 
 
 
