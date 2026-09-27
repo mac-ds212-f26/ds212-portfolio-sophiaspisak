@@ -562,7 +562,7 @@ cookieconsent.run({
 <span id="cb2-16"><a href="#cb2-16"></a>  ggthemes<span class="sc">::</span><span class="fu">theme_map</span>() <span class="sc">+</span></span>
 <span id="cb2-17"><a href="#cb2-17"></a>   <span class="fu">labs</span>(</span>
 <span id="cb2-18"><a href="#cb2-18"></a>    <span class="at">title =</span> <span class="st">"Which Countries Does the Cappuccino Index Include?"</span>,</span>
-<span id="cb2-19"><a href="#cb2-19"></a>    <span class="at">caption =</span> <span class="st">"Created by Sophia Spisak, 09/26 | Projection: Robinson | Sources: James Hoffmann; Filip Reierson via Github"</span></span>
+<span id="cb2-19"><a href="#cb2-19"></a>    <span class="at">caption =</span> <span class="st">"Created by Sophia Spisak on 09/26 | Projection: Robinson | Data sources: James Hoffmann; Filip Reierson via Tidy Tuesday Challenge, W36"</span></span>
 <span id="cb2-20"><a href="#cb2-20"></a>  ) <span class="sc">+</span></span>
 <span id="cb2-21"><a href="#cb2-21"></a>  <span class="fu">theme</span>(<span class="at">plot.title =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">15</span>,</span>
 <span id="cb2-22"><a href="#cb2-22"></a>                                  <span class="at">hjust =</span> .<span class="dv">55</span>,</span>
@@ -572,7 +572,7 @@ cookieconsent.run({
 <span id="cb2-26"><a href="#cb2-26"></a>        <span class="at">plot.caption =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="fl">6.5</span>,</span>
 <span id="cb2-27"><a href="#cb2-27"></a>                                    <span class="at">color =</span> <span class="st">"#75523e"</span>,</span>
 <span id="cb2-28"><a href="#cb2-28"></a>                                  <span class="at">family =</span> <span class="st">"M PLUS 1p"</span>,</span>
-<span id="cb2-29"><a href="#cb2-29"></a>                                  <span class="at">hjust =</span> <span class="fl">0.55</span>),</span>
+<span id="cb2-29"><a href="#cb2-29"></a>                                  <span class="at">hjust =</span> <span class="fl">0.57</span>),</span>
 <span id="cb2-30"><a href="#cb2-30"></a>        <span class="at">legend.text =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="fl">9.5</span>,</span>
 <span id="cb2-31"><a href="#cb2-31"></a>                                   <span class="at">color =</span> <span class="st">"#75523e"</span>,</span>
 <span id="cb2-32"><a href="#cb2-32"></a>                                  <span class="at">family =</span> <span class="st">"M PLUS 1p"</span>),</span>
@@ -605,7 +605,7 @@ cookieconsent.run({
 <span id="cb3-8"><a href="#cb3-8"></a>    <span class="at">subtitle =</span> <span class="st">"Used to Calculate Cappuccino Index"</span>,</span>
 <span id="cb3-9"><a href="#cb3-9"></a>    <span class="at">x =</span> <span class="st">"Number of Cafes Used to Calculate Index per Country"</span>,</span>
 <span id="cb3-10"><a href="#cb3-10"></a>    <span class="at">y =</span> <span class="st">"Density"</span>,</span>
-<span id="cb3-11"><a href="#cb3-11"></a>    <span class="at">caption =</span> <span class="st">"Created by Sophia Spisak, 09/26 | Sources: James Hoffmann; Filip Reierson via Github"</span></span>
+<span id="cb3-11"><a href="#cb3-11"></a>    <span class="at">caption =</span> <span class="st">"Created by Sophia Spisak on 09/26 | Data sources: James Hoffmann; Filip Reierson via TidyTuesday Challenge, W36"</span></span>
 <span id="cb3-12"><a href="#cb3-12"></a>  ) <span class="sc">+</span></span>
 <span id="cb3-13"><a href="#cb3-13"></a>  <span class="fu">theme</span>(</span>
 <span id="cb3-14"><a href="#cb3-14"></a>    <span class="at">plot.title =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">13</span>,</span>
@@ -644,43 +644,44 @@ cookieconsent.run({
 <div class="cell">
 <details class="code-fold"><summary>Code</summary><div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1"></a><span class="co"># create map of sample sizes</span></span>
 <span id="cb4-2"><a href="#cb4-2"></a><span class="fu">ggplot</span>() <span class="sc">+</span></span>
-<span id="cb4-3"><a href="#cb4-3"></a>  <span class="fu">geom_sf</span>(<span class="at">data =</span> countries_samp_size, <span class="fu">aes</span>(<span class="at">fill =</span> n_discrete)) <span class="sc">+</span></span>
+<span id="cb4-3"><a href="#cb4-3"></a>  <span class="fu">geom_sf</span>(<span class="at">data =</span> countries_samp_size, <span class="fu">aes</span>(<span class="at">fill =</span> n_discrete), <span class="at">color =</span> <span class="st">"#9C9C9C"</span>) <span class="sc">+</span></span>
 <span id="cb4-4"><a href="#cb4-4"></a>  <span class="fu">scale_fill_manual</span>(</span>
 <span id="cb4-5"><a href="#cb4-5"></a>      <span class="at">name =</span> <span class="cn">NULL</span>,</span>
 <span id="cb4-6"><a href="#cb4-6"></a>      <span class="at">values =</span> <span class="fu">c</span>(</span>
-<span id="cb4-7"><a href="#cb4-7"></a>      <span class="st">"Not Indexed"</span> <span class="ot">=</span> <span class="st">"#d1d1d1"</span>, <span class="co"># used Gemini to debug and resulted in this values code</span></span>
+<span id="cb4-7"><a href="#cb4-7"></a>      <span class="co"># used Gemini to debug and resulted in this values code</span></span>
 <span id="cb4-8"><a href="#cb4-8"></a>      <span class="st">"1 - 100"</span>     <span class="ot">=</span> <span class="st">"#FCFFDD"</span>, <span class="co"># it's assigning the value from n_discrete to the hex code value</span></span>
 <span id="cb4-9"><a href="#cb4-9"></a>      <span class="st">"101 - 175"</span>   <span class="ot">=</span> <span class="st">"#BCE9C5"</span>,</span>
 <span id="cb4-10"><a href="#cb4-10"></a>      <span class="st">"176 - 600"</span>   <span class="ot">=</span> <span class="st">"#18BDB5"</span></span>
 <span id="cb4-11"><a href="#cb4-11"></a>    ),</span>
-<span id="cb4-12"><a href="#cb4-12"></a>    <span class="at">labels =</span> <span class="fu">c</span>(<span class="st">"1 - 100"</span>, <span class="st">"101 - 175"</span>, <span class="st">"176 - 600"</span>, <span class="st">"Not Indexed"</span>)</span>
-<span id="cb4-13"><a href="#cb4-13"></a>  ) <span class="sc">+</span></span>
-<span id="cb4-14"><a href="#cb4-14"></a>  ggthemes<span class="sc">::</span><span class="fu">theme_map</span>() <span class="sc">+</span></span>
-<span id="cb4-15"><a href="#cb4-15"></a>  <span class="fu">labs</span>(</span>
-<span id="cb4-16"><a href="#cb4-16"></a>    <span class="at">title =</span> <span class="st">"Where Might the Cappuccino Index be More Accurate?"</span>,</span>
-<span id="cb4-17"><a href="#cb4-17"></a>    <span class="at">subtitle =</span> <span class="st">"Spatial Patterns of Sample Size (Number of Cafes) per Country"</span>,</span>
-<span id="cb4-18"><a href="#cb4-18"></a>    <span class="at">caption =</span> <span class="st">"Created by Sophia Spisak, 09/26 | Projection: Robinson | Sources: James Hoffmann; Filip Reierson via Github"</span></span>
-<span id="cb4-19"><a href="#cb4-19"></a>  ) <span class="sc">+</span></span>
-<span id="cb4-20"><a href="#cb4-20"></a>  <span class="fu">theme</span>(<span class="at">plot.title =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">15</span>,</span>
-<span id="cb4-21"><a href="#cb4-21"></a>                                  <span class="at">hjust =</span> .<span class="dv">55</span>,</span>
-<span id="cb4-22"><a href="#cb4-22"></a>                                  <span class="at">color =</span> <span class="st">"#3D3D3D"</span>,</span>
-<span id="cb4-23"><a href="#cb4-23"></a>                                  <span class="at">family =</span> <span class="st">"M PLUS 1p"</span>,</span>
-<span id="cb4-24"><a href="#cb4-24"></a>                                  <span class="at">face =</span> <span class="st">"bold"</span>),</span>
-<span id="cb4-25"><a href="#cb4-25"></a>        <span class="at">plot.subtitle =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">12</span>,</span>
-<span id="cb4-26"><a href="#cb4-26"></a>                                     <span class="at">hjust =</span> .<span class="dv">55</span>,</span>
-<span id="cb4-27"><a href="#cb4-27"></a>                                     <span class="at">color =</span> <span class="st">"#3D3D3D"</span>,</span>
-<span id="cb4-28"><a href="#cb4-28"></a>                                  <span class="at">family =</span> <span class="st">"M PLUS 1p"</span>),</span>
-<span id="cb4-29"><a href="#cb4-29"></a>        <span class="at">plot.caption =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="fl">6.5</span>,</span>
-<span id="cb4-30"><a href="#cb4-30"></a>                                    <span class="at">color =</span> <span class="st">"#3D3D3D"</span>,</span>
-<span id="cb4-31"><a href="#cb4-31"></a>                                  <span class="at">family =</span> <span class="st">"M PLUS 1p"</span>,</span>
-<span id="cb4-32"><a href="#cb4-32"></a>                                  <span class="at">hjust =</span> <span class="fl">0.55</span>),</span>
-<span id="cb4-33"><a href="#cb4-33"></a>        <span class="at">legend.text =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="fl">9.5</span>,</span>
-<span id="cb4-34"><a href="#cb4-34"></a>                                   <span class="at">color =</span> <span class="st">"#3D3D3D"</span>,</span>
-<span id="cb4-35"><a href="#cb4-35"></a>                                  <span class="at">family =</span> <span class="st">"M PLUS 1p"</span>),</span>
-<span id="cb4-36"><a href="#cb4-36"></a>        <span class="at">legend.key.height =</span> <span class="fu">unit</span>(<span class="fl">0.35</span>, <span class="st">"cm"</span>),,</span>
-<span id="cb4-37"><a href="#cb4-37"></a>        <span class="at">legend.position =</span> <span class="st">"bottom"</span>,</span>
-<span id="cb4-38"><a href="#cb4-38"></a>        <span class="at">legend.justification =</span> <span class="fu">c</span>(<span class="fl">0.55</span>, <span class="dv">0</span>),</span>
-<span id="cb4-39"><a href="#cb4-39"></a>        <span class="at">legend.key.spacing.x =</span> <span class="fu">unit</span>(<span class="fl">0.35</span>, <span class="st">"cm"</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb4-12"><a href="#cb4-12"></a>    <span class="at">labels =</span> <span class="fu">c</span>(<span class="st">"1 - 100"</span>, <span class="st">"101 - 175"</span>, <span class="st">"176 - 600"</span>, <span class="st">"Not Indexed"</span>),</span>
+<span id="cb4-13"><a href="#cb4-13"></a>    <span class="at">na.value =</span> <span class="st">"#d1d1d1"</span></span>
+<span id="cb4-14"><a href="#cb4-14"></a>  ) <span class="sc">+</span></span>
+<span id="cb4-15"><a href="#cb4-15"></a>  ggthemes<span class="sc">::</span><span class="fu">theme_map</span>() <span class="sc">+</span></span>
+<span id="cb4-16"><a href="#cb4-16"></a>  <span class="fu">labs</span>(</span>
+<span id="cb4-17"><a href="#cb4-17"></a>    <span class="at">title =</span> <span class="st">"Where Might the Cappuccino Index be More Accurate?"</span>,</span>
+<span id="cb4-18"><a href="#cb4-18"></a>    <span class="at">subtitle =</span> <span class="st">"Sample Size (Number of Cafes per Country) Highest in North America, Western Europe, Australia"</span>,</span>
+<span id="cb4-19"><a href="#cb4-19"></a>    <span class="at">caption =</span> <span class="st">"Created by Sophia Spisak on 09/26 | Projection: Robinson | Data Sources: James Hoffmann; Filip Reierson via Tidy Tuesday Challenge, W36"</span></span>
+<span id="cb4-20"><a href="#cb4-20"></a>  ) <span class="sc">+</span></span>
+<span id="cb4-21"><a href="#cb4-21"></a>  <span class="fu">theme</span>(<span class="at">plot.title =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">15</span>,</span>
+<span id="cb4-22"><a href="#cb4-22"></a>                                  <span class="at">hjust =</span> .<span class="dv">55</span>,</span>
+<span id="cb4-23"><a href="#cb4-23"></a>                                  <span class="at">color =</span> <span class="st">"#3D3D3D"</span>,</span>
+<span id="cb4-24"><a href="#cb4-24"></a>                                  <span class="at">family =</span> <span class="st">"M PLUS 1p"</span>,</span>
+<span id="cb4-25"><a href="#cb4-25"></a>                                  <span class="at">face =</span> <span class="st">"bold"</span>),</span>
+<span id="cb4-26"><a href="#cb4-26"></a>        <span class="at">plot.subtitle =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">11</span>,</span>
+<span id="cb4-27"><a href="#cb4-27"></a>                                     <span class="at">hjust =</span> .<span class="dv">58</span>,</span>
+<span id="cb4-28"><a href="#cb4-28"></a>                                     <span class="at">color =</span> <span class="st">"#3D3D3D"</span>,</span>
+<span id="cb4-29"><a href="#cb4-29"></a>                                  <span class="at">family =</span> <span class="st">"M PLUS 1p"</span>),</span>
+<span id="cb4-30"><a href="#cb4-30"></a>        <span class="at">plot.caption =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="fl">6.5</span>,</span>
+<span id="cb4-31"><a href="#cb4-31"></a>                                    <span class="at">color =</span> <span class="st">"#3D3D3D"</span>,</span>
+<span id="cb4-32"><a href="#cb4-32"></a>                                  <span class="at">family =</span> <span class="st">"M PLUS 1p"</span>,</span>
+<span id="cb4-33"><a href="#cb4-33"></a>                                  <span class="at">hjust =</span> <span class="fl">0.57</span>),</span>
+<span id="cb4-34"><a href="#cb4-34"></a>        <span class="at">legend.text =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="fl">9.5</span>,</span>
+<span id="cb4-35"><a href="#cb4-35"></a>                                   <span class="at">color =</span> <span class="st">"#3D3D3D"</span>,</span>
+<span id="cb4-36"><a href="#cb4-36"></a>                                  <span class="at">family =</span> <span class="st">"M PLUS 1p"</span>),</span>
+<span id="cb4-37"><a href="#cb4-37"></a>        <span class="at">legend.key.height =</span> <span class="fu">unit</span>(<span class="fl">0.35</span>, <span class="st">"cm"</span>),,</span>
+<span id="cb4-38"><a href="#cb4-38"></a>        <span class="at">legend.position =</span> <span class="st">"bottom"</span>,</span>
+<span id="cb4-39"><a href="#cb4-39"></a>        <span class="at">legend.justification =</span> <span class="fu">c</span>(<span class="fl">0.55</span>, <span class="dv">0</span>),</span>
+<span id="cb4-40"><a href="#cb4-40"></a>        <span class="at">legend.key.spacing.x =</span> <span class="fu">unit</span>(<span class="fl">0.35</span>, <span class="st">"cm"</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details><div class="cell-output-display">
 <div>
 <figure class="figure"><p><img src="hw01-tt_files/figure-html/unnamed-chunk-4-1.png" class="img-fluid figure-img" alt="a map of world countries shows that large sample sizes occur primarily in North America, Australia, and Europe. Elsewhere, sample sizes range from 1-100." width="672"></p>
@@ -1285,7 +1286,7 @@ cookieconsent.run({
 <span id="cb5-113"><a href="#cb5-113"></a>  ggthemes<span class="sc">::</span><span class="fu">theme_map</span>() <span class="sc">+</span></span>
 <span id="cb5-114"><a href="#cb5-114"></a>   <span class="fu">labs</span>(</span>
 <span id="cb5-115"><a href="#cb5-115"></a>    <span class="at">title =</span> <span class="st">"Which Countries Does the Cappuccino Index Include?"</span>,</span>
-<span id="cb5-116"><a href="#cb5-116"></a>    <span class="at">caption =</span> <span class="st">"Created by Sophia Spisak, 09/26 | Projection: Robinson | Sources: James Hoffmann; Filip Reierson via Github"</span></span>
+<span id="cb5-116"><a href="#cb5-116"></a>    <span class="at">caption =</span> <span class="st">"Created by Sophia Spisak on 09/26 | Projection: Robinson | Data sources: James Hoffmann; Filip Reierson via Tidy Tuesday Challenge, W36"</span></span>
 <span id="cb5-117"><a href="#cb5-117"></a>  ) <span class="sc">+</span></span>
 <span id="cb5-118"><a href="#cb5-118"></a>  <span class="fu">theme</span>(<span class="at">plot.title =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">15</span>,</span>
 <span id="cb5-119"><a href="#cb5-119"></a>                                  <span class="at">hjust =</span> .<span class="dv">55</span>,</span>
@@ -1295,7 +1296,7 @@ cookieconsent.run({
 <span id="cb5-123"><a href="#cb5-123"></a>        <span class="at">plot.caption =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="fl">6.5</span>,</span>
 <span id="cb5-124"><a href="#cb5-124"></a>                                    <span class="at">color =</span> <span class="st">"#75523e"</span>,</span>
 <span id="cb5-125"><a href="#cb5-125"></a>                                  <span class="at">family =</span> <span class="st">"M PLUS 1p"</span>,</span>
-<span id="cb5-126"><a href="#cb5-126"></a>                                  <span class="at">hjust =</span> <span class="fl">0.55</span>),</span>
+<span id="cb5-126"><a href="#cb5-126"></a>                                  <span class="at">hjust =</span> <span class="fl">0.57</span>),</span>
 <span id="cb5-127"><a href="#cb5-127"></a>        <span class="at">legend.text =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="fl">9.5</span>,</span>
 <span id="cb5-128"><a href="#cb5-128"></a>                                   <span class="at">color =</span> <span class="st">"#75523e"</span>,</span>
 <span id="cb5-129"><a href="#cb5-129"></a>                                  <span class="at">family =</span> <span class="st">"M PLUS 1p"</span>),</span>
@@ -1327,7 +1328,7 @@ cookieconsent.run({
 <span id="cb5-155"><a href="#cb5-155"></a>    <span class="at">subtitle =</span> <span class="st">"Used to Calculate Cappuccino Index"</span>,</span>
 <span id="cb5-156"><a href="#cb5-156"></a>    <span class="at">x =</span> <span class="st">"Number of Cafes Used to Calculate Index per Country"</span>,</span>
 <span id="cb5-157"><a href="#cb5-157"></a>    <span class="at">y =</span> <span class="st">"Density"</span>,</span>
-<span id="cb5-158"><a href="#cb5-158"></a>    <span class="at">caption =</span> <span class="st">"Created by Sophia Spisak, 09/26 | Sources: James Hoffmann; Filip Reierson via Github"</span></span>
+<span id="cb5-158"><a href="#cb5-158"></a>    <span class="at">caption =</span> <span class="st">"Created by Sophia Spisak on 09/26 | Data sources: James Hoffmann; Filip Reierson via TidyTuesday Challenge, W36"</span></span>
 <span id="cb5-159"><a href="#cb5-159"></a>  ) <span class="sc">+</span></span>
 <span id="cb5-160"><a href="#cb5-160"></a>  <span class="fu">theme</span>(</span>
 <span id="cb5-161"><a href="#cb5-161"></a>    <span class="at">plot.title =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">13</span>,</span>
@@ -1364,45 +1365,46 @@ cookieconsent.run({
 <span id="cb5-192"><a href="#cb5-192"></a><span class="in">```{r fig.alt = "a map of world countries shows that large sample sizes occur primarily in North America, Australia, and Europe. Elsewhere, sample sizes range from 1-100."}</span></span>
 <span id="cb5-193"><a href="#cb5-193"></a><span class="co"># create map of sample sizes</span></span>
 <span id="cb5-194"><a href="#cb5-194"></a><span class="fu">ggplot</span>() <span class="sc">+</span></span>
-<span id="cb5-195"><a href="#cb5-195"></a>  <span class="fu">geom_sf</span>(<span class="at">data =</span> countries_samp_size, <span class="fu">aes</span>(<span class="at">fill =</span> n_discrete)) <span class="sc">+</span></span>
+<span id="cb5-195"><a href="#cb5-195"></a>  <span class="fu">geom_sf</span>(<span class="at">data =</span> countries_samp_size, <span class="fu">aes</span>(<span class="at">fill =</span> n_discrete), <span class="at">color =</span> <span class="st">"#9C9C9C"</span>) <span class="sc">+</span></span>
 <span id="cb5-196"><a href="#cb5-196"></a>  <span class="fu">scale_fill_manual</span>(</span>
 <span id="cb5-197"><a href="#cb5-197"></a>      <span class="at">name =</span> <span class="cn">NULL</span>,</span>
 <span id="cb5-198"><a href="#cb5-198"></a>      <span class="at">values =</span> <span class="fu">c</span>(</span>
-<span id="cb5-199"><a href="#cb5-199"></a>      <span class="st">"Not Indexed"</span> <span class="ot">=</span> <span class="st">"#d1d1d1"</span>, <span class="co"># used Gemini to debug and resulted in this values code</span></span>
+<span id="cb5-199"><a href="#cb5-199"></a>      <span class="co"># used Gemini to debug and resulted in this values code</span></span>
 <span id="cb5-200"><a href="#cb5-200"></a>      <span class="st">"1 - 100"</span>     <span class="ot">=</span> <span class="st">"#FCFFDD"</span>, <span class="co"># it's assigning the value from n_discrete to the hex code value</span></span>
 <span id="cb5-201"><a href="#cb5-201"></a>      <span class="st">"101 - 175"</span>   <span class="ot">=</span> <span class="st">"#BCE9C5"</span>,</span>
 <span id="cb5-202"><a href="#cb5-202"></a>      <span class="st">"176 - 600"</span>   <span class="ot">=</span> <span class="st">"#18BDB5"</span></span>
 <span id="cb5-203"><a href="#cb5-203"></a>    ),</span>
-<span id="cb5-204"><a href="#cb5-204"></a>    <span class="at">labels =</span> <span class="fu">c</span>(<span class="st">"1 - 100"</span>, <span class="st">"101 - 175"</span>, <span class="st">"176 - 600"</span>, <span class="st">"Not Indexed"</span>)</span>
-<span id="cb5-205"><a href="#cb5-205"></a>  ) <span class="sc">+</span></span>
-<span id="cb5-206"><a href="#cb5-206"></a>  ggthemes<span class="sc">::</span><span class="fu">theme_map</span>() <span class="sc">+</span></span>
-<span id="cb5-207"><a href="#cb5-207"></a>  <span class="fu">labs</span>(</span>
-<span id="cb5-208"><a href="#cb5-208"></a>    <span class="at">title =</span> <span class="st">"Where Might the Cappuccino Index be More Accurate?"</span>,</span>
-<span id="cb5-209"><a href="#cb5-209"></a>    <span class="at">subtitle =</span> <span class="st">"Spatial Patterns of Sample Size (Number of Cafes) per Country"</span>,</span>
-<span id="cb5-210"><a href="#cb5-210"></a>    <span class="at">caption =</span> <span class="st">"Created by Sophia Spisak, 09/26 | Projection: Robinson | Sources: James Hoffmann; Filip Reierson via Github"</span></span>
-<span id="cb5-211"><a href="#cb5-211"></a>  ) <span class="sc">+</span></span>
-<span id="cb5-212"><a href="#cb5-212"></a>  <span class="fu">theme</span>(<span class="at">plot.title =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">15</span>,</span>
-<span id="cb5-213"><a href="#cb5-213"></a>                                  <span class="at">hjust =</span> .<span class="dv">55</span>,</span>
-<span id="cb5-214"><a href="#cb5-214"></a>                                  <span class="at">color =</span> <span class="st">"#3D3D3D"</span>,</span>
-<span id="cb5-215"><a href="#cb5-215"></a>                                  <span class="at">family =</span> <span class="st">"M PLUS 1p"</span>,</span>
-<span id="cb5-216"><a href="#cb5-216"></a>                                  <span class="at">face =</span> <span class="st">"bold"</span>),</span>
-<span id="cb5-217"><a href="#cb5-217"></a>        <span class="at">plot.subtitle =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">12</span>,</span>
-<span id="cb5-218"><a href="#cb5-218"></a>                                     <span class="at">hjust =</span> .<span class="dv">55</span>,</span>
-<span id="cb5-219"><a href="#cb5-219"></a>                                     <span class="at">color =</span> <span class="st">"#3D3D3D"</span>,</span>
-<span id="cb5-220"><a href="#cb5-220"></a>                                  <span class="at">family =</span> <span class="st">"M PLUS 1p"</span>),</span>
-<span id="cb5-221"><a href="#cb5-221"></a>        <span class="at">plot.caption =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="fl">6.5</span>,</span>
-<span id="cb5-222"><a href="#cb5-222"></a>                                    <span class="at">color =</span> <span class="st">"#3D3D3D"</span>,</span>
-<span id="cb5-223"><a href="#cb5-223"></a>                                  <span class="at">family =</span> <span class="st">"M PLUS 1p"</span>,</span>
-<span id="cb5-224"><a href="#cb5-224"></a>                                  <span class="at">hjust =</span> <span class="fl">0.55</span>),</span>
-<span id="cb5-225"><a href="#cb5-225"></a>        <span class="at">legend.text =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="fl">9.5</span>,</span>
-<span id="cb5-226"><a href="#cb5-226"></a>                                   <span class="at">color =</span> <span class="st">"#3D3D3D"</span>,</span>
-<span id="cb5-227"><a href="#cb5-227"></a>                                  <span class="at">family =</span> <span class="st">"M PLUS 1p"</span>),</span>
-<span id="cb5-228"><a href="#cb5-228"></a>        <span class="at">legend.key.height =</span> <span class="fu">unit</span>(<span class="fl">0.35</span>, <span class="st">"cm"</span>),,</span>
-<span id="cb5-229"><a href="#cb5-229"></a>        <span class="at">legend.position =</span> <span class="st">"bottom"</span>,</span>
-<span id="cb5-230"><a href="#cb5-230"></a>        <span class="at">legend.justification =</span> <span class="fu">c</span>(<span class="fl">0.55</span>, <span class="dv">0</span>),</span>
-<span id="cb5-231"><a href="#cb5-231"></a>        <span class="at">legend.key.spacing.x =</span> <span class="fu">unit</span>(<span class="fl">0.35</span>, <span class="st">"cm"</span>))</span>
-<span id="cb5-232"><a href="#cb5-232"></a><span class="in">```</span></span>
-<span id="cb5-233"><a href="#cb5-233"></a>Countries with very large sample sizes are in the "Global North" - the US, Canada, Australia, and various locations in Europe. Countries with smaller sample size are far more common and spread more evenly across the globe. This suggests that the Cappuccino Index may more be more accurately representative in only specific areas, and that the index of most countries should be taken cautiously.</span>
+<span id="cb5-204"><a href="#cb5-204"></a>    <span class="at">labels =</span> <span class="fu">c</span>(<span class="st">"1 - 100"</span>, <span class="st">"101 - 175"</span>, <span class="st">"176 - 600"</span>, <span class="st">"Not Indexed"</span>),</span>
+<span id="cb5-205"><a href="#cb5-205"></a>    <span class="at">na.value =</span> <span class="st">"#d1d1d1"</span></span>
+<span id="cb5-206"><a href="#cb5-206"></a>  ) <span class="sc">+</span></span>
+<span id="cb5-207"><a href="#cb5-207"></a>  ggthemes<span class="sc">::</span><span class="fu">theme_map</span>() <span class="sc">+</span></span>
+<span id="cb5-208"><a href="#cb5-208"></a>  <span class="fu">labs</span>(</span>
+<span id="cb5-209"><a href="#cb5-209"></a>    <span class="at">title =</span> <span class="st">"Where Might the Cappuccino Index be More Accurate?"</span>,</span>
+<span id="cb5-210"><a href="#cb5-210"></a>    <span class="at">subtitle =</span> <span class="st">"Sample Size (Number of Cafes per Country) Highest in North America, Western Europe, Australia"</span>,</span>
+<span id="cb5-211"><a href="#cb5-211"></a>    <span class="at">caption =</span> <span class="st">"Created by Sophia Spisak on 09/26 | Projection: Robinson | Data Sources: James Hoffmann; Filip Reierson via Tidy Tuesday Challenge, W36"</span></span>
+<span id="cb5-212"><a href="#cb5-212"></a>  ) <span class="sc">+</span></span>
+<span id="cb5-213"><a href="#cb5-213"></a>  <span class="fu">theme</span>(<span class="at">plot.title =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">15</span>,</span>
+<span id="cb5-214"><a href="#cb5-214"></a>                                  <span class="at">hjust =</span> .<span class="dv">55</span>,</span>
+<span id="cb5-215"><a href="#cb5-215"></a>                                  <span class="at">color =</span> <span class="st">"#3D3D3D"</span>,</span>
+<span id="cb5-216"><a href="#cb5-216"></a>                                  <span class="at">family =</span> <span class="st">"M PLUS 1p"</span>,</span>
+<span id="cb5-217"><a href="#cb5-217"></a>                                  <span class="at">face =</span> <span class="st">"bold"</span>),</span>
+<span id="cb5-218"><a href="#cb5-218"></a>        <span class="at">plot.subtitle =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">11</span>,</span>
+<span id="cb5-219"><a href="#cb5-219"></a>                                     <span class="at">hjust =</span> .<span class="dv">58</span>,</span>
+<span id="cb5-220"><a href="#cb5-220"></a>                                     <span class="at">color =</span> <span class="st">"#3D3D3D"</span>,</span>
+<span id="cb5-221"><a href="#cb5-221"></a>                                  <span class="at">family =</span> <span class="st">"M PLUS 1p"</span>),</span>
+<span id="cb5-222"><a href="#cb5-222"></a>        <span class="at">plot.caption =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="fl">6.5</span>,</span>
+<span id="cb5-223"><a href="#cb5-223"></a>                                    <span class="at">color =</span> <span class="st">"#3D3D3D"</span>,</span>
+<span id="cb5-224"><a href="#cb5-224"></a>                                  <span class="at">family =</span> <span class="st">"M PLUS 1p"</span>,</span>
+<span id="cb5-225"><a href="#cb5-225"></a>                                  <span class="at">hjust =</span> <span class="fl">0.57</span>),</span>
+<span id="cb5-226"><a href="#cb5-226"></a>        <span class="at">legend.text =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="fl">9.5</span>,</span>
+<span id="cb5-227"><a href="#cb5-227"></a>                                   <span class="at">color =</span> <span class="st">"#3D3D3D"</span>,</span>
+<span id="cb5-228"><a href="#cb5-228"></a>                                  <span class="at">family =</span> <span class="st">"M PLUS 1p"</span>),</span>
+<span id="cb5-229"><a href="#cb5-229"></a>        <span class="at">legend.key.height =</span> <span class="fu">unit</span>(<span class="fl">0.35</span>, <span class="st">"cm"</span>),,</span>
+<span id="cb5-230"><a href="#cb5-230"></a>        <span class="at">legend.position =</span> <span class="st">"bottom"</span>,</span>
+<span id="cb5-231"><a href="#cb5-231"></a>        <span class="at">legend.justification =</span> <span class="fu">c</span>(<span class="fl">0.55</span>, <span class="dv">0</span>),</span>
+<span id="cb5-232"><a href="#cb5-232"></a>        <span class="at">legend.key.spacing.x =</span> <span class="fu">unit</span>(<span class="fl">0.35</span>, <span class="st">"cm"</span>))</span>
+<span id="cb5-233"><a href="#cb5-233"></a><span class="in">```</span></span>
+<span id="cb5-234"><a href="#cb5-234"></a>Countries with very large sample sizes are in the "Global North" - the US, Canada, Australia, and various locations in Europe. Countries with smaller sample size are far more common and spread more evenly across the globe. This suggests that the Cappuccino Index may more be more accurately representative in only specific areas, and that the index of most countries should be taken cautiously.</span>
 </code></pre></div><button title="Copy to Clipboard" class="code-copy-button" data-in-quarto-modal=""><i class="bi"></i></button></div>
 </div></div></div></div></div>
 </div> <!-- /content -->
