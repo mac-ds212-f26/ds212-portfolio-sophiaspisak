@@ -233,39 +233,3 @@ ggplot() +
 ```
 Countries with very large sample sizes are in the "Global North" - the US, Canada, Australia, and various locations in Europe. Countries with smaller sample size are far more common and spread more evenly across the globe. This suggests that the Cappuccino Index may more be more accurately representative in only specific areas, and that the index of most countries should be taken cautiously.
 
-```{r}
-countries_valid <- st_make_valid(countries)
-
-countries_bounds <- countries_valid |>
-    st_bbox()
-
-countries_crop <- st_crop(countries_valid, countries_bounds)
-
-
-ggplot() +
-  geom_sf(data = countries_crop) +
-  ggthemes::theme_map() +
-  labs(
-    title = "Where Might the Cappuccino Index be More Accurate?",
-    subtitle = "Sample size (number of cafes per country) highest in North America, western Europe, Australia",
-    caption = "Projection: Robinson | Data sources: James Hoffmann; Filip Reierson via Tidy Tuesday Challenge, w36
-    Data classified manually based on natural breaks in distribution
-    Created by Sophia Spisak on 09/26"
-  ) +
-  theme(plot.title = element_text(size = 15,
-                                  hjust = 0,
-                                  color = "#3D3D3D",
-                                  family = "M PLUS 1p",
-                                  face = "bold"),
-        plot.subtitle = element_text(size = 11,
-                                     hjust = 0,
-                                     color = "#3D3D3D",
-                                  family = "M PLUS 1p"),
-        plot.caption = element_text(size = 6.5,
-                                    color = "#3D3D3D",
-                                  family = "M PLUS 1p",
-                                  hjust = 0,
-                                  lineheight = 1.25,
-                                  margin = margin(t = 7)))
-```
-
