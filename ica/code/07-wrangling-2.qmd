@@ -185,7 +185,11 @@ df_dates
 
 ```{r}
 # write your answer below
-
+df_dates |>
+    mutate(
+        date1 = str_c(month, "-", day, "-", year),
+        date2 = str_glue("{month}-{day}-{year}")
+    )
 ```
 
 
@@ -241,7 +245,12 @@ df
 
 ```{r}
 # write your answer below
-
+df |>
+    mutate(
+        word_length = str_length(word),
+        middle_position = ceiling(word_length/2),
+        middle_letter = str_sub(word, middle_position, middle_position)
+    )
 ```
 
 
@@ -319,7 +328,7 @@ str_view(words, "[^aeiou]y[^aeiou]")
 Using the `words` dataset, find words that have two vowels in a row followed by an "m".
 
 ```{r ex_regex_classes}
-
+str_view(words, "[aeiou][aeiou]m")
 ```
 
 
@@ -338,7 +347,7 @@ Using the `fruit` dataset, find fruits that have a repeated vowel ("aa", "ee", "
 
 ```{r ex_regex_alternation}
 # write your answer below
-
+str_view(fruit, "aa|ee|ii|oo|uu")
 ```
 
 
@@ -354,14 +363,14 @@ Using the `words` dataset, find words that start with "y"
 
 ```{r ex_regex_start_end_group}
 # write your answer below
-
+str_view(words, "^y")
 ```
 
 Using the `words` dataset again, find words that don't start with "y".
 
 ```{r ex_regex_start_end_group_2}
 # write your answer below
-
+str_view(words, "^[^y]")
 ```
 
 
