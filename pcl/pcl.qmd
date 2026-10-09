@@ -9,3 +9,40 @@ title: "Pre-Class Learning Summaries"
 ## Quarto
 
 ![from qmd4sci.njtierney.com](0810-quarto.jpeg)
+
+## File System
+
+![](0911-files.png)
+
+## Advanced Data Visualization
+
+![](0914-adv-data-viz.png)
+
+## Advanced Spatial Data Visualization
+
+![](0918-adv-spatial-viz.png)
+
+
+## Advanced Data Wrangling 1
+
+![](0923-adv-wrangling-1.png)
+
+
+## Advanced Data Wrangling 2
+
+![](0930-avd-wrangling-2-1.png)
+![](0930-adv-wrangling-2-2.png)
+
+
+## Missing Data
+
+![](1002-missing-data-1.png)
+
+
+## Functions
+
+![](1005-functions-1.png)
+
+## Base R
+
+![](1009-base-R-1.png)
