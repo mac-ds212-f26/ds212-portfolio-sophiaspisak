@@ -26,3 +26,23 @@ title: "Pre-Class Learning Summaries"
 ## Advanced Data Wrangling 1
 
 ![](0923-adv-wrangling-1.png)
+
+
+## Advanced Data Wrangling 2
+
+![](0930-avd-wrangling-2-1.png)
+![](0930-adv-wrangling-2-2.png)
+
+
+## Missing Data
+
+![](1002-missing-data-1.png)
+
+
+## Functions
+
+![](1005-functions-1.png)
+
+## Base R
+
+![](1009-base-R-1.png)
