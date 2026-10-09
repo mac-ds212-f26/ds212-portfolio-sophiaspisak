@@ -90,8 +90,8 @@ Create the string `It's Thursday`. What happens if you put the string inside sin
 
 ```{r ex_create_string}
 # write your answer below
-string4 <- 'It's Thursday'
-string5 <- "It's Thursday"
+# string4 <- 'It's Thursday'
+# string5 <- "It's Thursday"
 
 # errors!
 ```
@@ -102,7 +102,7 @@ string5 <- "It's Thursday"
 Because `"` and `'` are special characters in the creation of strings, R offers another way to put them inside a string. We can **escape** these special characters by putting a `\` in front of them:
 
 ```{r escape_chars}
-string1 <- "This is a string with \"double quotes\""
+# string1 <- "This is a string with \"double quotes\""
 string2 <- "This is a string with \'single quotes\'"
 str_view(string1)
 str_view(string2)
@@ -117,7 +117,7 @@ Create the string `C:\Users`. What happens when you don't escape the `\`?
 
 ```{r ex_create_string_slash}
 # write your answer below
-string4 <- "C:\Users"
+# string4 <- "C:\Users"
 
 # error because of \U if the \ is not escaped
 ```
