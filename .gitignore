@@ -70,3 +70,5 @@ _freeze/
 *.log
 *.aux
 *.toc
+fun/az_music/data/processed/spotify.csv
+fun/az_music/data/raw/StreamingHistory_music_0.json
