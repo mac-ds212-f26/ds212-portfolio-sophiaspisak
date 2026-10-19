@@ -80,10 +80,11 @@ book:
       - ica/code/03-adv-ggplot-notes.qmd
       - ica/04_adv_maps/code/04-adv-maps-1-notes.qmd
       - ica/code/06-wrangling-1-notes.qmd
-      - ica/code/07-wrangling-2-notes.qmd
-      - ica/code/08-missing-data-notes.qmd
+      - ica/code/07-wrangling-2.qmd
+      - ica/code/08-missing-data.qmd
       - ica/code/09-functions.qmd
       - ica/code/10-base-r.qmd
+      - ica/code/11-iteration-1.qmd
 
     - part: "Extras"
       chapters:
