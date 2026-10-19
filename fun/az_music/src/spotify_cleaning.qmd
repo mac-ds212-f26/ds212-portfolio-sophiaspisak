@@ -1,0 +1,81 @@
+---
+title: "spotify_cleaning"
+format: html
+---
+
+```{r}
+# load libraries
+library(jsonlite)
+library(tidyverse)
+```
+
+```{r}
+# read in data as json
+spotify_json <- read_json("../data/raw/StreamingHistory_music_0.json", simplifyVector = TRUE)
+
+# check for any nested lists that weren't converted to vectors
+spotify_json |> 
+  select(where(is.list)) |> 
+  glimpse() # i think we're good to go?
+
+# write to csv to for future use
+# don't think we have to worry about flattening since there don't seem to be any unconverted lists
+write_csv(spotify_json, "../data/processed/spotify.csv")
+```
+
+```{r}
+# read in csv
+spotify <- read_csv("../data/processed/spotify.csv")
+
+# convert entire dataset to Mountain Standard Time
+spotify <- spotify |> 
+  mutate(endTime = with_tz(endTime, tz = "UTC")) |>  # should be UTC to begin with but ensure that it is
+  mutate(endTime = with_tz(endTime, tz = "America/Phoenix"))
+```
+
+```{r}
+# split endTime into separate variables; rename and reorder other variables
+spotify <- spotify |> 
+  mutate(date = date(endTime),
+         end_time = hms::as_hms(endTime)) |> 
+  rename(artist = artistName,
+         track = trackName,
+         ms_played = msPlayed) |> 
+  relocate(c(date, end_time, track), .before = artist)
+```
+
+```{r}
+# subset only songs during June AZ visit
+spotify_jun <- spotify |> 
+  filter(endTime >= ymd_hms("2026-06-12 17:57:00", tz = "America/Phoenix") 
+         & endTime <= ymd_hms("2026-06-15 08:56:00", tz = "America/Phoenix"))
+
+
+# subset only songs during July AZ visit
+# times seem to be off by an hour (maybe for just some? - hard to tell because time on phone photos is sometimes inaccurate too, so nothing to compare to)
+# it is what it is
+spotify_july <- spotify |> 
+  filter(endTime >= ymd_hms("2026-07-17 17:27:00", tz = "America/Phoenix") 
+         & endTime <= ymd_hms("2026-07-22 07:37:00", tz = "America/Phoenix"))
+
+spotify_az <- spotify |> 
+  filter(endTime >= ymd_hms("2026-06-12 17:57:00", tz = "America/Phoenix") &
+           endTime <= ymd_hms("2026-06-15 08:56:00", tz = "America/Phoenix") | 
+           endTime >= ymd_hms("2026-07-17 17:27:00", tz = "America/Phoenix") & 
+           endTime <= ymd_hms("2026-07-22 07:37:00", tz = "America/Phoenix"))
+
+head(spotify_jun)
+head(spotify_july)
+head(spotify_az)
+```
+
+
+
+
+## Resources
+
+- https://datacarpentry.github.io/r-socialsci/07-json.html
+- https://github.com/rstudio/cheatsheets/blob/main/lubridate.pdf
+- https://dplyr.tidyverse.org/reference/between.html
+- https://en.wikipedia.org/wiki/Time_in_Arizona
+- "I am working with Spotify data. I want to the filter the dataset to a range of datetimes based on a variable called endTime, which is of S3: POSIXct class. I only want dates after 2026-06-12 17:57:00. Here is my code (spotify is a tibble that displays as expected): spotify |> filter(endTime >= "2026-06-12 17:57:00") The data is successfully filtered to the date of 2026-06-12, but it gives observations before 17:57:00 on that day. What am I doing wrong? Ask clarifying questions if necessary, and do not be sycophantic." 
