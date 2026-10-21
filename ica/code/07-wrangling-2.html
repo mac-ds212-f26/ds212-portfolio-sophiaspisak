@@ -438,6 +438,16 @@ cookieconsent.run({
   <a href="../../ica/code/10-base-r.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">10 Base R</span></a>
   </div>
 </li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../ica/code/11-iteration-1.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">11 Loops+Iter I</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../ica/code/12-iteration-2.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">12 Iteration II</span></a>
+  </div>
+</li>
       </ul>
 </li>
         <li class="sidebar-item sidebar-item-section">
@@ -667,8 +677,8 @@ cookieconsent.run({
 <div class="cell">
 <details class="code-fold"><summary>Code</summary><div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb33"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1"></a><span class="fu">str_view</span>(string1, <span class="at">html =</span> <span class="cn">TRUE</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details><div class="cell-output-display">
-<div class="str_view html-widget html-fill-item" id="htmlwidget-2cdff89eb2828c59799a" style="width:960px;height:100%;"></div>
-<script type="application/json" data-for="htmlwidget-2cdff89eb2828c59799a">{"x":{"html":"<ul>\n  <li><pre>Record temp:<span class='special'>\t<\/span>102<\/pre><\/li>\n<\/ul>"},"evals":[],"jsHooks":[]}</script>
+<div class="str_view html-widget html-fill-item" id="htmlwidget-ebdf8ff6b7f4ba3fb70f" style="width:960px;height:100%;"></div>
+<script type="application/json" data-for="htmlwidget-ebdf8ff6b7f4ba3fb70f">{"x":{"html":"<ul>\n  <li><pre>Record temp:<span class='special'>\t<\/span>102<\/pre><\/li>\n<\/ul>"},"evals":[],"jsHooks":[]}</script>
 </div>
 </div>
 </section><section id="combine" class="level3"><h3 class="anchored" data-anchor-id="combine">Combine</h3>
@@ -845,34 +855,32 @@ cookieconsent.run({
 <span id="cb60-2"><a href="#cb60-2"></a><span class="fu">data</span>(fruit)</span>
 <span id="cb60-3"><a href="#cb60-3"></a><span class="fu">sample</span>(fruit, <span class="dv">10</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details><div class="cell-output cell-output-stdout">
-<pre><code> [1] "breadfruit"        "grapefruit"        "cucumber"         
- [4] "loquat"            "eggplant"          "pomelo"           
- [7] "purple mangosteen" "pineapple"         "lime"             
-[10] "banana"           </code></pre>
+<pre><code> [1] "pear"         "blackberry"   "jackfruit"    "eggplant"     "breadfruit"  
+ [6] "feijoa"       "cantaloupe"   "canary melon" "watermelon"   "tangerine"   </code></pre>
 </div>
 </div>
 <div class="cell">
 <details class="code-fold"><summary>Code</summary><div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb62"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb62-1"><a href="#cb62-1"></a><span class="fu">data</span>(words)</span>
 <span id="cb62-2"><a href="#cb62-2"></a><span class="fu">sample</span>(words, <span class="dv">10</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details><div class="cell-output cell-output-stdout">
-<pre><code> [1] "sorry"    "keep"     "file"     "forget"   "story"    "one"     
- [7] "exercise" "weigh"    "role"     "kind"    </code></pre>
+<pre><code> [1] "grand"     "similar"   "perhaps"   "choose"    "close"     "bottle"   
+ [7] "always"    "mile"      "yesterday" "rid"      </code></pre>
 </div>
 </div>
 <div class="cell">
 <details class="code-fold"><summary>Code</summary><div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb64"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb64-1"><a href="#cb64-1"></a><span class="fu">data</span>(sentences)</span>
 <span id="cb64-2"><a href="#cb64-2"></a><span class="fu">sample</span>(sentences, <span class="dv">10</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details><div class="cell-output cell-output-stdout">
-<pre><code> [1] "The farmer swapped his horse for a brown ox."   
- [2] "Bring your problems to the wise chief."         
- [3] "Shape the clay gently into block form."         
- [4] "Wood is best for making toys and blocks."       
- [5] "Both lost their lives in the raging storm."     
- [6] "Their eyelids droop for want of sleep."         
- [7] "The key you designed will fit the lock."        
- [8] "The horse balked and threw the tall rider."     
- [9] "The vast space stretched into the far distance."
-[10] "The pods of peas ferment in bare fields."       </code></pre>
+<pre><code> [1] "The prince ordered his head chopped off."        
+ [2] "A cruise in warm waters in a sleek yacht is fun."
+ [3] "The new girl was fired today at noon."           
+ [4] "She called his name many times."                 
+ [5] "Hemp is a weed found in parts of the tropics."   
+ [6] "Fill the ink jar with sticky glue."              
+ [7] "The poor boy missed the boat again."             
+ [8] "It is hard to erase blue or red ink."            
+ [9] "The fur of cats goes by many names."             
+[10] "It is late morning on the old wall clock."       </code></pre>
 </div>
 </div>
 <p>We can use <code>str_view()</code> with the <code>pattern</code> argument to see what parts of a string match the regex supplied in the <code>pattern</code> argument. (Matches are enclosed in <code>&lt;&gt;</code>.)</p>
@@ -1066,7 +1074,7 @@ cookieconsent.run({
   ..   letterId = col_double(),
   ..   question_only = col_character()
   .. )
- - attr(*, "problems")=&lt;pointer: 0x12b670700&gt; </code></pre>
+ - attr(*, "problems")=&lt;pointer: 0x12175a1f0&gt; </code></pre>
 </div>
 </div>
 <p>Take a couple minutes to scroll through the <a href="https://pudding.cool/2018/11/dearabby/">30 Years of American Anxieties</a> article to get ideas for themes that you might want to search for using regular expressions.</p>
