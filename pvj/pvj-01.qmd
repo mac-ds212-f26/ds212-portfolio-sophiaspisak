@@ -2,4 +2,114 @@
 title: "Personal Visualization Journey"
 ---
 
-Add content here
+I used [Sam Shanny-Csik's documentation](https://github.com/samanthacsik/strava-dashboard/wiki/Creating-a-Strava-API-Application-&-authentication) for getting API access and wrangling the data.
+
+
+```{r}
+# load libraries
+library(rStrava)
+library(tidyverse)
+library(hms)
+library(leaflet)
+library(googleway)
+library(htmlwidgets)
+library(htmltools)
+```
+
+```{r}
+# authenticate account and create token
+my_token <- httr::config(token = strava_oauth(app_name, app_client_id, app_secret,
+                                              app_scope = "activity:read_all"))
+```
+
+```{r}
+# get all activities
+my_activities <- get_activity_list(stoken = my_token)
+
+# convert lists of activities into data frame
+activities_df <- compile_activities(my_activities)
+```
+
+```{r}
+# save copy of raw activities data as csv
+write_csv(activities_df, "data/raw/strava_activities_raw.csv")
+```
+
+```{r}
+# cleaning data for leaflet: rename, convert, select, and drop NAs to get only moving activities (my code)
+clean_activities <- activities_df %>%
+  
+  rename(start_lat = start_latlng1,
+         start_long = start_latlng2,
+         end_lat = end_latlng1,
+         end_long = end_latlng2,
+         avg_speed = average_speed,
+         max_elev = elev_high,
+         min_elev = elev_low,
+         total_elev_gain = total_elevation_gain) %>%
+  
+  mutate(upload_id = as.numeric(upload_id),
+         pr_count = as.numeric(pr_count),
+         athlete.id = as.numeric(athlete.id),
+         id = as.numeric(id),
+         
+         start_datetime = as_datetime(start_date), # yes
+         start_datetime_local = as_datetime(start_date_local), # yes
+         start_datetime_localSplit = start_datetime_local, # NO
+         start_date = date(start_date_local), # yes
+         
+         sport_type = str_replace(sport_type, "AlpineSki", "Alpine Ski"),
+         sport_type = str_replace(sport_type, "NordicSki", "Nordic Ski"),
+         sport_type = str_replace(sport_type, "RollerSki", "Rollerski"),
+         sport_type = str_replace(sport_type, "Ride", "Bike"),
+         type = str_replace(type, "AlpineSki", "Alpine Ski"),
+         type = str_replace(type, "NordicSki", "Nordic Ski"),
+         type = str_replace(type, "RollerSki", "Rollerski"),
+         type = str_replace(type, "Ride", "Bike")) %>%
+  
+  separate(start_datetime_localSplit, c("Delete", "start_time_local"), sep = " ") %>%
+  mutate(start_time_local = parse_hms(start_time_local),) %>%
+  
+  filter(sport_type != "Workout") %>%
+  
+  select(!c(contains("heart"), contains("photo"), average_cadence, trainer, private,
+            has_kudoed, from_accepted_tag, flagged, commute, resource_state,
+            athlete.resource_state, from_accepted_tag, manual, workout_type, Delete, 
+            start_datetime, timezone, utc_offset)) %>%
+  
+  drop_na(start_lat)
+```
+
+```{r}
+# more datetime cleaning, converting units, changing to factors (code from Sam Shany-Csik)
+clean_activities <- clean_activities %>%
+  
+  rename(start_datetime = start_datetime_local,
+         start_time = start_time_local) %>%
+  
+  mutate(avg_speed = round((avg_speed * 0.621371), 2),
+         distance = round((distance * 0.621371), 2),
+         max_elev = round((max_elev * 3.281), 2),
+         min_elev = round((min_elev * 3.281), 2),
+         total_elev_gain = round((total_elev_gain * 3.281), 2),
+         elapsed_time = (seconds_to_period(elapsed_time)),
+         moving_time = seconds_to_period(moving_time),
+         start_date = as.Date(start_date)) %>% # should have 33 variables total after reordering
+  
+  mutate_at(c("visibility", "sport_type", "type", 
+               "athlete.id", "upload_id_str"), 
+            factor) %>%
+  
+  select(name, sport_type, type, visibility, start_datetime, 
+         start_date, start_time, elapsed_time, moving_time, distance,
+         avg_speed, max_speed, min_elev, max_elev, total_elev_gain,
+         start_lat, start_long, end_lat, end_long, athlete_count, achievement_count, 
+         pr_count, kudos_count, comment_count, map.id, map.resource_state, 
+         map.summary_polyline, athlete.id, external_id, id, upload_id, upload_id_str)
+```
+
+```{r}
+# save clean activities data as a csv
+write_csv(clean_activities, "data/processed/strava_activities_clean.csv")
+```
+

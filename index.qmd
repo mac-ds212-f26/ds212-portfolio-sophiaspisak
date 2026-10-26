@@ -3,7 +3,7 @@ title: "Welcome"
 ---
 
 
-Welcome to my online portfolio for COMP/STAT112 course taken at [Macalester College](https://www.macalester.edu/).  Please, use the side bar on the left for navigation.
+Welcome to my online portfolio for Intermediate Data Science (Comp/Stat 212), a course taken at [Macalester College](https://www.macalester.edu/).  Please use the side bar on the left for navigation.
 
 ```{r}
 #| output: false
@@ -37,6 +37,8 @@ ds <- read.csv(here("assets", "msg.csv"))
 ```{r}
 #| echo: false
 
-wordcloud2(data = ds, shape = "cardioid")
+wordcloud2(data = ds, shape = "cardioid", fontFamily = "helvetica neue")
+
+# alt color vector: color = c("skyblue4", "lightsteelblue2", "thistle3", "wheat3", "darkolivegreen4", "sienna4", "lightsalmon3", "lavenderblush4")
 ```
 
